@@ -26,15 +26,31 @@ namespace Paul.Utils
             Logging.LogDB("USD:" + acctbal.result.ZUSD);
             Logging.LogDB("DOGE:" + acctbal.result.XXDG);
             Logging.LogDB("BTC:" + acctbal.result.XXBT);
-            Logging.LogDB(privateResponse);
-            Console.WriteLine(privateResponse);
-            Console.WriteLine("Asset:" + acctbal.result.ZUSD);
+            //       Logging.LogDB(privateResponse);
+
+            Console.WriteLine("     usd: " + acctbal.result.ZUSD);
+            Console.WriteLine(" bitcoin: " + acctbal.result.XXBT);
+            Console.WriteLine("     eth: " + acctbal.result.XETH);
+            Console.WriteLine("litecoin: " + acctbal.result.XLTC);
+            Console.WriteLine("    dash: " + acctbal.result.DASH);
+            Console.WriteLine("     xmr: " + acctbal.result.XXMR);
+            Console.WriteLine("    link: " + acctbal.result.LINK);            
+            Console.WriteLine("     zec: " + acctbal.result.XZEC);
+            Console.WriteLine("     sol: " + acctbal.result.XSOL);
+            wait(2000);
+
+        }
+
+
+        public static void wait(int msec)
+        {
+            System.Threading.Thread.Sleep(msec);
         }
 
         public class Result
         {
             /// <summary>
-            /// USD CAAAAASH Balance
+            /// USD Cash Money
             /// </summary>
             public string ZUSD { get; set; }
 
@@ -59,14 +75,14 @@ namespace Paul.Utils
             public string XLTC { get; set; }
 
             /// <summary>
-            /// Link Balance
+            /// Link Balance "XZEC":"0.1500000000","XXMR":"0.1000000000"
             /// </summary>
             public string LINK { get; set; }
 
             /// <summary>
             /// Monero Balance
             /// </summary>
-            public string XMR { get; set; }
+            public string XXMR { get; set; }
 
             /// <summary>
             /// DASH Balance
@@ -76,12 +92,13 @@ namespace Paul.Utils
             /// <summary>
             /// ZCASH Balance
             /// </summary>
-            public string ZEC { get; set; }
+            public string XZEC { get; set; }
 
             /// <summary>
-            /// AUGUR Balance
+            /// SOL Balance
             /// </summary>
-            public string REP { get; set; }
+            public string XSOL { get; set; }
+
         }
 
         public class Root
