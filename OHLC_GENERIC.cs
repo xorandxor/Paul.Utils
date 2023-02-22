@@ -65,7 +65,8 @@ namespace Paul.Utils
         {
             string sql = "delete from OHLC";
 
-            SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.Text, sql);
+            SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_DELETE_ALL");
+            SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_SET_STATUS_LOADING");
         }
 
         /// <summary>

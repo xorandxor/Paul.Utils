@@ -23,20 +23,20 @@ namespace Paul.Utils
             Root acctbal = GetClassFromJson(prirespfixed);
 
             Logging.LogDB("Account Balance");
-            Logging.LogDB("USD:" + acctbal.result.ZUSD);
-            Logging.LogDB("DOGE:" + acctbal.result.XXDG);
-            Logging.LogDB("BTC:" + acctbal.result.XXBT);
-            //       Logging.LogDB(privateResponse);
 
-            Console.WriteLine("     usd: " + acctbal.result.ZUSD);
-            Console.WriteLine(" bitcoin: " + acctbal.result.XXBT);
-            Console.WriteLine("     eth: " + acctbal.result.XETH);
-            Console.WriteLine("litecoin: " + acctbal.result.XLTC);
-            Console.WriteLine("    dash: " + acctbal.result.DASH);
-            Console.WriteLine("     xmr: " + acctbal.result.XXMR);
-            Console.WriteLine("    link: " + acctbal.result.LINK);
-            Console.WriteLine("     zec: " + acctbal.result.XZEC);
-            Console.WriteLine("     sol: " + acctbal.result.XSOL);
+            Console.WriteLine("****************************************** ");
+            Console.WriteLine("** ACCOUNT BALANCE                      ** ");
+            Console.WriteLine("****************************************** ");
+            Console.WriteLine("*      usd: " + acctbal.result.ZUSD);
+            Console.WriteLine("*  bitcoin: " + acctbal.result.XXBT);
+            Console.WriteLine("* ethereum: " + acctbal.result.XETH);
+            Console.WriteLine("* litecoin: " + acctbal.result.XLTC);
+            Console.WriteLine("*     dash: " + acctbal.result.DASH);
+            Console.WriteLine("*   monero: " + acctbal.result.XXMR);
+            Console.WriteLine("*     link: " + acctbal.result.LINK);
+            Console.WriteLine("*   z-cash: " + acctbal.result.XZEC);
+            Console.WriteLine("*   solano: " + acctbal.result.XSOL);
+            Console.WriteLine("****************************************** ");
             wait(2000);
         }
 

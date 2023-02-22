@@ -8,8 +8,8 @@ namespace Paul.Utils
     public class OHLC_XETHUSD
     {
         //Array of strings or integers(TickData) [items[items = 8 items] ]
-        //test
-        // Array of tick data arrays[int < time >,
+        // Array of tick data arrays[
+        // int < time >,
         // string < open >,
         // string < high >,
         // string < low >,
