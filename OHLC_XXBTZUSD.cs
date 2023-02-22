@@ -22,7 +22,6 @@ namespace Paul.Utils
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(myJsonResponse);
         }
 
-
         public string GetOhlcJson()
         {
             string pairname = "XXBTZUSD";
@@ -34,6 +33,7 @@ namespace Paul.Utils
             Logging.Log(publicResponse);
             return publicResponse;
         }
+
         public class Result
         {
             public List<List<object>> XXBTZUSD { get; set; }

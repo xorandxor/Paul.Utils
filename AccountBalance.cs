@@ -34,13 +34,11 @@ namespace Paul.Utils
             Console.WriteLine("litecoin: " + acctbal.result.XLTC);
             Console.WriteLine("    dash: " + acctbal.result.DASH);
             Console.WriteLine("     xmr: " + acctbal.result.XXMR);
-            Console.WriteLine("    link: " + acctbal.result.LINK);            
+            Console.WriteLine("    link: " + acctbal.result.LINK);
             Console.WriteLine("     zec: " + acctbal.result.XZEC);
             Console.WriteLine("     sol: " + acctbal.result.XSOL);
             wait(2000);
-
         }
-
 
         public static void wait(int msec)
         {
@@ -98,7 +96,6 @@ namespace Paul.Utils
             /// SOL Balance
             /// </summary>
             public string XSOL { get; set; }
-
         }
 
         public class Root

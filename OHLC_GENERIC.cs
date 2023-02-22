@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System;
 
 namespace Paul.Utils
 {
-
     public class OHLCObject
     {
-        public OHLCObject() { }
+        public OHLCObject()
+        { }
 
         public string AssetPair { get; set; }
         public DateTime timestamp { get; set; }
@@ -18,7 +18,6 @@ namespace Paul.Utils
         public double VolWeightedAvgPrice { get; set; }
         public double Volume { get; set; }
         public double Count { get; set; }
-
     }
 
     /// <summary>
@@ -40,7 +39,7 @@ namespace Paul.Utils
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(myJsonResponse);
         }
-        
+
         public class Result
         {
             public List<List<object>> XXBTZUSD { get; set; }
@@ -60,18 +59,14 @@ namespace Paul.Utils
             string sql = "delete from OHLC where AssetPair = '" + pairname + "'";
 
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.Text, sql);
-
-
         }
+
         public static void ClearOHLCTable()
         {
             string sql = "delete from OHLC";
 
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.Text, sql);
-
-
         }
-
 
         /// <summary>
         /// save ohlc data to the mssql table using OHLC_INSERT stored proedure
@@ -82,20 +77,19 @@ namespace Paul.Utils
         {
             double idx = 0;
 
-            
             ///save bitcoin
             if (root.result.XXBTZUSD != null)
             {
                 if (root.result.XXBTZUSD.Count > 0)
                 {
                     Console.Write("XXBTZUSD Records: " + root.result.XXBTZUSD.Count.ToString());
-                    
+
                     for (int i = 0; i < root.result.XXBTZUSD.Count; i++)
                     {
                         OHLCObject obj = new OHLCObject();
-                    
+
                         obj.AssetPair = "XXBTZUSD";
-                        
+
                         obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XXBTZUSD[i][0].ToString()));
                         obj.OpenPrice = Convert.ToDouble(root.result.XXBTZUSD[i][1].ToString());
                         obj.HighPrice = Convert.ToDouble(root.result.XXBTZUSD[i][2].ToString());
@@ -104,10 +98,9 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XXBTZUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XXBTZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XXBTZUSD[i][7].ToString());
-                        
+
                         SaveRecord(obj);
                         idx++;
-
                     }
                 }
             }
@@ -137,7 +130,6 @@ namespace Paul.Utils
                         SaveRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
-
                     }
                 }
             }
@@ -183,7 +175,7 @@ namespace Paul.Utils
                     {
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "XDGUSD";
-                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XDGUSD[i][0].ToString()));                        obj.OpenPrice = Convert.ToDouble(root.result.XDGUSD[i][1].ToString());
+                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XDGUSD[i][0].ToString())); obj.OpenPrice = Convert.ToDouble(root.result.XDGUSD[i][1].ToString());
                         obj.HighPrice = Convert.ToDouble(root.result.XDGUSD[i][2].ToString());
                         obj.LowPrice = Convert.ToDouble(root.result.XDGUSD[i][3].ToString());
                         obj.ClosePrice = Convert.ToDouble(root.result.XDGUSD[i][4].ToString());
@@ -209,7 +201,7 @@ namespace Paul.Utils
                     {
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "XMRUSD";
-                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XMRUSD[i][0].ToString()));                        obj.OpenPrice = Convert.ToDouble(root.result.XMRUSD[i][1].ToString());
+                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XMRUSD[i][0].ToString())); obj.OpenPrice = Convert.ToDouble(root.result.XMRUSD[i][1].ToString());
                         obj.HighPrice = Convert.ToDouble(root.result.XMRUSD[i][2].ToString());
                         obj.LowPrice = Convert.ToDouble(root.result.XMRUSD[i][3].ToString());
                         obj.ClosePrice = Convert.ToDouble(root.result.XMRUSD[i][4].ToString());
@@ -219,7 +211,6 @@ namespace Paul.Utils
                         SaveRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
-
                     }
                 }
             }
@@ -236,7 +227,7 @@ namespace Paul.Utils
                     {
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "DASHUSD";
-                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.DASHUSD[i][0].ToString()));                        obj.OpenPrice = Convert.ToDouble(root.result.DASHUSD[i][1].ToString());
+                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.DASHUSD[i][0].ToString())); obj.OpenPrice = Convert.ToDouble(root.result.DASHUSD[i][1].ToString());
                         obj.HighPrice = Convert.ToDouble(root.result.DASHUSD[i][2].ToString());
                         obj.LowPrice = Convert.ToDouble(root.result.DASHUSD[i][3].ToString());
                         obj.ClosePrice = Convert.ToDouble(root.result.DASHUSD[i][4].ToString());
@@ -258,12 +249,11 @@ namespace Paul.Utils
                     ClearOHLCTable("XZECUSD");
                     Console.Write("XZECUSD Records: " + root.result.XZECUSD.Count.ToString());
 
-
                     for (int i = 0; i < root.result.XZECUSD.Count; i++)
                     {
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "XZECUSD";
-                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XZECUSD[i][0].ToString()));                        obj.OpenPrice = Convert.ToDouble(root.result.XZECUSD[i][1].ToString());
+                        obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XZECUSD[i][0].ToString())); obj.OpenPrice = Convert.ToDouble(root.result.XZECUSD[i][1].ToString());
                         obj.HighPrice = Convert.ToDouble(root.result.XZECUSD[i][2].ToString());
                         obj.LowPrice = Convert.ToDouble(root.result.XZECUSD[i][3].ToString());
                         obj.ClosePrice = Convert.ToDouble(root.result.XZECUSD[i][4].ToString());
@@ -303,7 +293,7 @@ namespace Paul.Utils
                     }
                 }
             }
-            return idx; 
+            return idx;
         }
 
         private static void SaveRecord(OHLCObject o)
@@ -356,10 +346,7 @@ namespace Paul.Utils
             {
                 Console.WriteLine(ex.Message);
                 Logging.LogDB(ex.ToString());
-                
             }
-
-
         }
 
         public class Root

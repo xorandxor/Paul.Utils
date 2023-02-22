@@ -1,7 +1,5 @@
-﻿using System.Net;
+﻿using System;
 using System.Net.Mail;
-using System.Net.Mime;
-using System;
 
 namespace Paul.Utils
 {
@@ -68,7 +66,7 @@ namespace Paul.Utils
                         Logging.LogDB("Email:: Not functional - logging here instead:");
                         Logging.LogDB("Email: " + eml_subject + " \n" + eml_body);
                     }
-                    catch 
+                    catch
                     {
                         Logging.Log("Nothing fucking works in this hellhole! " + eml_subject + "\n" + eml_body);
                     }
@@ -132,8 +130,5 @@ namespace Paul.Utils
                 throw ex;
             }
         }
-
-      
-
     }
 }

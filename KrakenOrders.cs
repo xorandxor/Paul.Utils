@@ -158,8 +158,10 @@ namespace Paul.Utils
         #endregion Public Constructors
 
         #region Public Properties
+
         //test
         public KrakenCloseOrderType CloseOrderType { get => closeOrderType; set => closeOrderType = value; }
+
         public string ClosePrice { get => closePrice; set => closePrice = value; }
         public string ClosePrice2 { get => closePrice2; set => closePrice2 = value; }
         public string Deadline { get => deadline; set => deadline = value; }

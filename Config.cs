@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Paul.Utils
 {
     public static class Config
@@ -10,7 +11,6 @@ namespace Paul.Utils
         public static bool EMAIL_ALERT_DB_DOWN => Convert.ToBoolean(AppSettings.ReadSetting("EMAIL_ALERT_DB_DOWN"));
         public static string ADMIN_EMAIL => Convert.ToString(AppSettings.ReadSetting("ADMIN_EMAIL"));
 
-
         public static bool EMAIL_FUNCTIONAL = false;
 
         public static string EMAIL_HOST => Convert.ToString(AppSettings.ReadSetting("EMAIL_HOST"));
@@ -18,6 +18,5 @@ namespace Paul.Utils
         public static string EMAIL_USERNAME => Convert.ToString(AppSettings.ReadSetting("EMAIL_USERNAME"));
         public static string EMAIL_PASSWORD => Convert.ToString(AppSettings.ReadSetting("EMAIL_PASSWORD"));
         public static bool EMAIL_USE_SSL => Convert.ToBoolean(AppSettings.ReadSetting("ADMIN_USE_SSL"));
-
     }
 }

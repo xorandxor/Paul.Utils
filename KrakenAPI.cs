@@ -92,23 +92,22 @@ namespace Paul.Utils
             }
         }
 
-             public static string Get_OHLC_Json_Data(string pairname, int intervl)
+        public static string Get_OHLC_Json_Data(string pairname, int intervl)
         {
             string param2 = "";
-            if(intervl==null)
+            if (intervl == null)
             {
                 param2 = "&interval=" + intervl.ToString();
             }
             string publicEndpoint = "OHLC";
             string publicInputParameters = "pair=" + pairname + "&interval=15";// &since=" + Utilities.getUnixTimestampMinusOneHour();
             string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
-            
+
             //Logging.Log("BTC OHLC");
 
             //Logging.Log(publicResponse);
-            
+
             return publicResponse;
-        
         }
 
         #endregion Public Methods
