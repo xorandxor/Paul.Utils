@@ -38,6 +38,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="KrakenAPI.cs" />
     <Compile Include="KrakenOrders.cs" />
     <Compile Include="Logging.cs" />

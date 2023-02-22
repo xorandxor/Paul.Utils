@@ -18,11 +18,14 @@ namespace Paul.Utils
         {
             try
             {
-                SqlParameter[] p = new SqlParameter[1];// (SqlParameter"message", SqlDbType.NVarChar, 255);
-                p[0] = new SqlParameter();
-                p[0].ParameterName = "@message";
-                p[0].DbType = DbType.String;
-                p[0].Value = message;
+                SqlParameter[] p = new SqlParameter[1];
+                p[0] = new SqlParameter
+                {
+                    SqlDbType = SqlDbType.NVarChar,
+                    ParameterName = "@message",
+                    DbType = DbType.String,
+                    Value = message
+                };
                 SqlHelper.ExecuteNonQuery(Config.DBConn, CommandType.StoredProcedure, "LOG_INSERT", p);
             }
             catch (Exception ex) // if sql server is down then write an error to the system log
