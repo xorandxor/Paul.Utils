@@ -180,6 +180,55 @@ namespace Paul.Utils
             public string o { get; set; }
         }
 
+
+
+        #region kraken api ticker data structure
+        /*
+         * 
+         * additional property
+
+        object (AssetTickerInfo)
+
+        Asset Ticker Info
+        a	
+        sk [<price>, <whole lot volume>, <lot volume>]
+        b	
+        Array of strings
+
+        Bid [<price>, <whole lot volume>, <lot volume>]
+        c	
+        Array of strings
+
+        Last trade closed [<price>, <lot volume>]
+        v	
+        Array of strings
+
+        Volume [<today>, <last 24 hours>]
+        p	
+        Array of strings
+
+        Volume weighted average price [<today>, <last 24 hours>]
+        t	
+        Array of integers
+
+        Number of trades [<today>, <last 24 hours>]
+        l	
+        Array of strings
+
+        Low [<today>, <last 24 hours>]
+        h	
+        Array of strings
+
+        High [<today>, <last 24 hours>]
+        o	
+        string
+
+        Today's opening price
+        error	
+        Array of strings (error) 
+        */
+        #endregion
+
         /// <summary>
         /// save ohlc data to the mssql table using OHLC_INSERT stored proedure
         /// </summary>
@@ -189,34 +238,35 @@ namespace Paul.Utils
         {
             double idx = 0;
 
+            #region reference fields
+            //public string assetpair { get; set; } = "";
+            //public double ask { get; set; } = 0;
+            //public double askwlvolume { get; set; } = 0;
+            //public double asklotvolume { get; set; } = 0;
+            //public double bid { get; set; } = 0;
+            //public double bidwlvolume { get; set; } = 0;
+            //public double bidlotvolume { get; set; } = 0;
+            //public double volumetoday { get; set; } = 0;
+            //public double volume24hr { get; set; } = 0;
+            //public double volweightedavgpricetoday { get; set; } = 0;
+            //public double volweightedavgprice24hr { get; set; } = 0;
+            //public double numberoftradestoday { get; set; } = 0;
+            //public double Numberoftrades24hrs { get; set; } = 0;
+            //public double lowtoday { get; set; } = 0;
+            //public double low24hr { get; set; } = 0;
+            //public double hightoday { get; set; } = 0;
+            //public double high24hr { get; set; } = 0;
+            //public double openprice { get; set; } = 0;
+            #endregion
+
+            // data structure to hold the ticker information
+            TickerObject obj = new TickerObject();
+
             ///save bitcoin
             if (root.result.XXBTZUSD != null)
             {
-                Console.WriteLine("XXBTZUSD Ticker: Ask: $" + root.result.XXBTZUSD.a);
+                Console.WriteLine("XXBTZUSD Ticker: Ask: $" + root.result.XXBTZUSD.a[0]);
 
-                TickerObject obj = new TickerObject();
-                
-                #region ref material
-                //public string assetpair { get; set; } = "";
-                //public double ask { get; set; } = 0;
-                //public double askwlvolume { get; set; } = 0;
-                //public double asklotvolume { get; set; } = 0;
-                //public double bid { get; set; } = 0;
-                //public double bidwlvolume { get; set; } = 0;
-                //public double bidlotvolume { get; set; } = 0;
-                //public double volumetoday { get; set; } = 0;
-                //public double volume24hr { get; set; } = 0;
-                //public double volweightedavgpricetoday { get; set; } = 0;
-                //public double volweightedavgprice24hr { get; set; } = 0;
-                //public double numberoftradestoday { get; set; } = 0;
-                //public double Numberoftrades24hrs { get; set; } = 0;
-                //public double lowtoday { get; set; } = 0;
-                //public double low24hr { get; set; } = 0;
-                //public double hightoday { get; set; } = 0;
-                //public double high24hr { get; set; } = 0;
-                //public double openprice { get; set; } = 0;
-                #endregion
-                
                 obj.assetpair = "XXBTZUSD";
                 obj.ask = Convert.ToDouble(root.result.XXBTZUSD.a[0]);
                 obj.askwlvolume = Convert.ToDouble(root.result.XXBTZUSD.a[1]);
@@ -226,22 +276,224 @@ namespace Paul.Utils
                 obj.bidlotvolume = Convert.ToDouble(root.result.XXBTZUSD.b[2]);
                 obj.volumetoday = Convert.ToDouble(root.result.XXBTZUSD.v[0]);
                 obj.volume24hr = Convert.ToDouble(root.result.XXBTZUSD.v[1]);
-
-                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XXBTZUSD.v[0]);
-                obj.volumetoday = Convert.ToDouble(root.result.XXBTZUSD.v[0]);
-
-                obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XXBTZUSD[i][0].ToString()));
-                obj.OpenPrice = Convert.ToDouble(root.result.XXBTZUSD[i][1].ToString());
-                obj.HighPrice = Convert.ToDouble(root.result.XXBTZUSD[i][2].ToString());
-                obj.LowPrice = Convert.ToDouble(root.result.XXBTZUSD[i][3].ToString());
-                obj.ClosePrice = Convert.ToDouble(root.result.XXBTZUSD[i][4].ToString());
-                obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XXBTZUSD[i][5].ToString());
-                obj.Volume = Convert.ToDouble(root.result.XXBTZUSD[i][6].ToString());
-                obj.Count = Convert.ToDouble(root.result.XXBTZUSD[i][7].ToString());
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XXBTZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XXBTZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XXBTZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XXBTZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XXBTZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XXBTZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XXBTZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XXBTZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XXBTZUSD.o);
 
                 SaveTickerRecord(obj);
+
                 idx++;
             }
+            
+            ///save litecoin
+            if (root.result.XLTCUSD != null)
+            {
+                Console.WriteLine("XLTCUSD Ticker: Ask: $" + root.result.XLTCUSD.a[0]);
+
+                obj.assetpair = "XLTCUSD";
+                obj.ask = Convert.ToDouble(root.result.XLTCUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XLTCUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XLTCUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XLTCUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XLTCUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XLTCUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XLTCUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XLTCUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XLTCUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XLTCUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XLTCUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XLTCUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XLTCUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XLTCUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XLTCUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XLTCUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XLTCUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save ethereum
+            if (root.result.XETHZUSD != null)
+            {
+                Console.WriteLine("XETHZUSD Ticker: Ask: $" + root.result.XETHZUSD.a[0]);
+
+                obj.assetpair = "XETHZUSD";
+                obj.ask = Convert.ToDouble(root.result.XETHZUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XETHZUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XETHZUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XETHZUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XETHZUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XETHZUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XETHZUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XETHZUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XETHZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XETHZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XETHZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XETHZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XETHZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XETHZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XETHZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XETHZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XETHZUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save doge
+            if (root.result.XDGUSD != null)
+            {
+                Console.WriteLine("XDGUSD Ticker: Ask: $" + root.result.XXBTZUSD.a[0]);
+
+                obj.assetpair = "XDGUSD";
+                obj.ask = Convert.ToDouble(root.result.XDGUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XDGUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XDGUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XDGUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XDGUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XDGUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XDGUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XDGUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XDGUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XDGUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XDGUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XDGUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XDGUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XDGUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XDGUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XDGUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XDGUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save monero
+            if (root.result.XMRUSD != null)
+            {
+                Console.WriteLine("XMRUSD Ticker: Ask: $" + root.result.XMRUSD.a[0]);
+
+                obj.assetpair = "XMRUSD";
+                obj.ask = Convert.ToDouble(root.result.XMRUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XMRUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XMRUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XMRUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XMRUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XMRUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XMRUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XMRUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XMRUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XMRUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XMRUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XMRUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XMRUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XMRUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XMRUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XMRUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XMRUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save dash
+            if (root.result.DASHUSD != null)
+            {
+                Console.WriteLine("DASHUSD Ticker: Ask: $" + root.result.DASHUSD.a[0]);
+
+                obj.assetpair = "DASHUSD";
+                obj.ask = Convert.ToDouble(root.result.DASHUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.DASHUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.DASHUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.DASHUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.DASHUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.DASHUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.DASHUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.DASHUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.DASHUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.DASHUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.DASHUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.DASHUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.DASHUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.DASHUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.DASHUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.DASHUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.DASHUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save Z Cash
+            if (root.result.XZECUSD != null)
+            {
+                Console.WriteLine("XZECUSD Ticker: Ask: $" + root.result.XZECUSD.a[0]);
+
+                obj.assetpair = "XZECUSD";
+                obj.ask = Convert.ToDouble(root.result.XZECUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XZECUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XZECUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XZECUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XZECUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XZECUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XZECUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XZECUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XZECUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XZECUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XZECUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XZECUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XZECUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XZECUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XZECUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XZECUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XZECUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            
+            ///save augur
+            if (root.result.XREPZUSD != null)
+            {
+                Console.WriteLine("XREPZUSD Ticker: Ask: $" + root.result.XREPZUSD.a[0]);
+
+                obj.assetpair = "XREPZUSD";
+                obj.ask = Convert.ToDouble(root.result.XREPZUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XREPZUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XREPZUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XREPZUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XREPZUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XREPZUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XREPZUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XREPZUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XREPZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XREPZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XREPZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XREPZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XREPZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XREPZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XREPZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XREPZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XREPZUSD.o);
+
+                SaveTickerRecord(obj);
+
+                idx++;
+            }
+            return idx;
         }
 
         public static Root GetClassFromJson(string myJsonResponse)
