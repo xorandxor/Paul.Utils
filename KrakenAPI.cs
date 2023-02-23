@@ -109,6 +109,13 @@ namespace Paul.Utils
 
             return publicResponse;
         }
+        public static string Get_Ticker_Json_Data(string pairname)
+        {
+            string publicEndpoint = "Ticker";
+            string publicInputParameters = "pair=" + pairname;
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+            return publicResponse;
+        }
 
         #endregion Public Methods
 

@@ -63,8 +63,6 @@ namespace Paul.Utils
 
         public static void ClearOHLCTable()
         {
-            string sql = "delete from OHLC";
-
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_DELETE_ALL");
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_SET_STATUS_LOADING");
         }
@@ -83,7 +81,7 @@ namespace Paul.Utils
             {
                 if (root.result.XXBTZUSD.Count > 0)
                 {
-                    Console.Write("XXBTZUSD Records: " + root.result.XXBTZUSD.Count.ToString());
+                    Console.WriteLine("XXBTZUSD Records: " + root.result.XXBTZUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XXBTZUSD.Count; i++)
                     {
@@ -100,7 +98,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XXBTZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XXBTZUSD[i][7].ToString());
 
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                     }
                 }
@@ -112,11 +110,10 @@ namespace Paul.Utils
             {
                 if (root.result.XLTCZUSD.Count > 0)
                 {
-                    Console.Write("XLTCZUSD Records: " + root.result.XLTCZUSD.Count.ToString());
+                    Console.WriteLine("XLTCZUSD Records: " + root.result.XLTCZUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XLTCZUSD.Count; i++)
                     {
-                        ClearOHLCTable("XLTZUSD");
 
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "XLTZUSD";
@@ -128,7 +125,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XLTCZUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XLTCZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XLTCZUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -141,8 +138,7 @@ namespace Paul.Utils
             {
                 if (root.result.XETHZUSD.Count > 0)
                 {
-                    ClearOHLCTable("XETHZUSD");
-                    Console.Write("XETHZUSD Records: " + root.result.XETHZUSD.Count.ToString());
+                    Console.WriteLine("XETHZUSD Records: " + root.result.XETHZUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XETHZUSD.Count; i++)
                     {
@@ -156,7 +152,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XETHZUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XETHZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XETHZUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -169,8 +165,7 @@ namespace Paul.Utils
             {
                 if (root.result.XDGUSD.Count > 0)
                 {
-                    ClearOHLCTable("XDGUSD");
-                    Console.Write("XDGUSD Records: " + root.result.XDGUSD.Count.ToString());
+                    Console.WriteLine("XDGUSD Records: " + root.result.XDGUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XDGUSD.Count; i++)
                     {
@@ -183,7 +178,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XDGUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XDGUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XDGUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -195,8 +190,7 @@ namespace Paul.Utils
             {
                 if (root.result.XMRUSD.Count > 0)
                 {
-                    ClearOHLCTable("XMRUSD");
-                    Console.Write("XMRUSD Records: " + root.result.XMRUSD.Count.ToString());
+                    Console.WriteLine("XMRUSD Records: " + root.result.XMRUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XMRUSD.Count; i++)
                     {
@@ -209,7 +203,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XMRUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XMRUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XMRUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -221,8 +215,7 @@ namespace Paul.Utils
             {
                 if (root.result.DASHUSD.Count > 0)
                 {
-                    ClearOHLCTable("DASHUSD");
-                    Console.Write("DASHUSD Records: " + root.result.DASHUSD.Count.ToString());
+                    Console.WriteLine("DASHUSD Records: " + root.result.DASHUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.DASHUSD.Count; i++)
                     {
@@ -235,7 +228,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.DASHUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.DASHUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.DASHUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -247,8 +240,7 @@ namespace Paul.Utils
             {
                 if (root.result.XZECUSD.Count > 0)
                 {
-                    ClearOHLCTable("XZECUSD");
-                    Console.Write("XZECUSD Records: " + root.result.XZECUSD.Count.ToString());
+                    Console.WriteLine("XZECUSD Records: " + root.result.XZECUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XZECUSD.Count; i++)
                     {
@@ -261,7 +253,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XZECUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XZECUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XZECUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -273,8 +265,7 @@ namespace Paul.Utils
             {
                 if (root.result.XREPZUSD.Count > 0)
                 {
-                    ClearOHLCTable("XREPZUSD");
-                    Console.Write("XREPZUSD Records: " + root.result.XREPZUSD.Count.ToString());
+                    Console.WriteLine("XREPZUSD Records: " + root.result.XREPZUSD.Count.ToString());
 
                     for (int i = 0; i < root.result.XREPZUSD.Count; i++)
                     {
@@ -288,7 +279,7 @@ namespace Paul.Utils
                         obj.VolWeightedAvgPrice = Convert.ToDouble(root.result.XREPZUSD[i][5].ToString());
                         obj.Volume = Convert.ToDouble(root.result.XREPZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XREPZUSD[i][7].ToString());
-                        SaveRecord(obj);
+                        SaveOHLCRecord(obj);
                         idx++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
@@ -297,7 +288,7 @@ namespace Paul.Utils
             return idx;
         }
 
-        private static void SaveRecord(OHLCObject o)
+        private static void SaveOHLCRecord(OHLCObject o)
         {
             //[OHLC_INSERT]
             /*@timestampjson datetime,
