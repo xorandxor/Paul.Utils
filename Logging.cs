@@ -16,22 +16,8 @@ namespace Paul.Utils
         /// <param name="message">The message to be written</param>
         public static void LogDB(string message)
         {
-            try
-            {
-                SqlParameter[] p = new SqlParameter[1];
-                p[0] = new SqlParameter
-                {
-                    SqlDbType = SqlDbType.NVarChar,
-                    ParameterName = "@message",
-                    DbType = DbType.String,
-                    Value = message
-                };
-                SqlHelper.ExecuteNonQuery(Config.DBConn, CommandType.StoredProcedure, "LOG_INSERT", p);
-            }
-            catch (Exception ex) // if sql server is down then write an error to the system log
-            {
-                Logging.WriteToEventLog("Application", "Paul.Utils", "Exception Occurred: " + ex.ToString(), EventLogEntryType.Error);
-            }
+            // moved all this shit to a dedicated Database class
+            KrakenDB.LogDB(message);
         }
 
         /// <summary>

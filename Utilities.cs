@@ -12,18 +12,18 @@ namespace Paul.Utils
             return dtDateTime;
         }
 
-        public static string getUnixTimestamp()
+        public static string GetUnixTimestamp()
         {
             return Convert.ToString((int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
         }
 
-        public static string getUnixTimestampMinusOneHour()
+        public static string GetUnixTimestampMinusOneHour()
         {
             DateTime x = DateTime.Now.Subtract(new TimeSpan(0, 1, 0, 0));
             return Convert.ToString((int)x.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
         }
 
-        public static string getUnixTimestampMinusTwoHours()
+        public static string GetUnixTimestampMinusTwoHours()
         {
             DateTime x = DateTime.Now.Subtract(new TimeSpan(0, 2, 0, 0));
             return Convert.ToString((int)x.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);

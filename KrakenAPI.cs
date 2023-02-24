@@ -67,10 +67,11 @@ namespace Paul.Utils
             return jsonData;
         }
 
-        /// <summary> this will probably work idk till i test </summary> <param
+        /// <summary> this will probably work idk till i test (not having internet sucks crusty goat balls)</summary> <param
         /// name="endpointName">AddOrder</param> <param
         /// name="inputParameters">pair=x&price=y</param> <param name="apiPublicKey">Api Public
-        /// Key</param> <param name="apiPrivateKey">Api Private Key</param> <returns>JSON String</returns>
+        /// Key</param> <param name="apiPrivateKey">Api Private Key</param> 
+        /// <returns>JSON String</returns>
         public static string QueryPublicEndpoint(string endpointName, string inputParameters)
         {
             string jsonData = "";
@@ -92,24 +93,16 @@ namespace Paul.Utils
             }
         }
 
-        public static string Get_OHLC_Json_Data(string pairname, int intervl)
+        public static string GetOHLCJsonData(string pairname, int intervl)
         {
-            string param2 = "";
-            if (intervl == null)
-            {
-                param2 = "&interval=" + intervl.ToString();
-            }
+            
             string publicEndpoint = "OHLC";
-            string publicInputParameters = "pair=" + pairname + "&interval=15";// &since=" + Utilities.getUnixTimestampMinusOneHour();
+            string publicInputParameters = "pair=" + pairname + "&interval=15";
             string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
-
-            //Logging.Log("BTC OHLC");
-
-            //Logging.Log(publicResponse);
 
             return publicResponse;
         }
-        public static string Get_Ticker_Json_Data(string pairname)
+        public static string GetTickerJsonData(string pairname)
         {
             string publicEndpoint = "Ticker";
             string publicInputParameters = "pair=" + pairname;
