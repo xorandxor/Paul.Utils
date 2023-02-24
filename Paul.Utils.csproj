@@ -55,8 +55,6 @@
     <Compile Include="KrakenOrders.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="OHLC_GENERIC.cs" />
-    <Compile Include="OHLC_XETHUSD.cs" />
-    <Compile Include="OHLC_XXBTZUSD.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccountBalance.cs" />

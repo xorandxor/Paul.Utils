@@ -117,6 +117,12 @@ namespace Paul.Utils
             return publicResponse;
         }
 
+        public static void APICooldown(int msec)
+        {
+            Console.WriteLine("Sleeping for [" + msec + "] ms. (API COOLDOWN)");
+            System.Threading.Thread.Sleep(msec);
+        }
+
         #endregion Public Methods
 
         #region Private Methods
