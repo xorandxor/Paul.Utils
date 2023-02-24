@@ -70,7 +70,7 @@ namespace Paul.Utils
         /// <summary> this will probably work idk till i test (not having internet sucks crusty goat balls)</summary> <param
         /// name="endpointName">AddOrder</param> <param
         /// name="inputParameters">pair=x&price=y</param> <param name="apiPublicKey">Api Public
-        /// Key</param> <param name="apiPrivateKey">Api Private Key</param> 
+        /// Key</param> <param name="apiPrivateKey">Api Private Key</param>
         /// <returns>JSON String</returns>
         public static string QueryPublicEndpoint(string endpointName, string inputParameters)
         {
@@ -95,13 +95,13 @@ namespace Paul.Utils
 
         public static string GetOHLCJsonData(string pairname, int intervl)
         {
-            
             string publicEndpoint = "OHLC";
             string publicInputParameters = "pair=" + pairname + "&interval=15";
             string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
 
             return publicResponse;
         }
+
         public static string GetTickerJsonData(string pairname)
         {
             string publicEndpoint = "Ticker";
@@ -176,7 +176,7 @@ namespace Paul.Utils
 
             string apiEndpointFullURL = baseDomain + privatePath + endpointName;
             string nonce = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-           
+
             if (string.IsNullOrWhiteSpace(inputParameters) == false)
             {
                 inputParameters = "&" + inputParameters;

@@ -114,7 +114,6 @@ namespace Paul.Utils
 
                     for (int i = 0; i < root.result.XLTCZUSD.Count; i++)
                     {
-
                         OHLCObject obj = new OHLCObject();
                         obj.AssetPair = "XLTZUSD";
                         obj.timestamp = Utilities.UnixTimeStampToDateTime(Convert.ToDouble(root.result.XLTCZUSD[i][0].ToString()));

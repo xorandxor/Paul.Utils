@@ -86,8 +86,5 @@ namespace Paul.Utils
                 Logging.WriteToEventLog("Application", "Paul.Utils", "Exception Occurred: " + ex.ToString(), EventLogEntryType.Error);
             }
         }
-
-
-
     }
 }

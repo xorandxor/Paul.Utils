@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Paul.Utils
 {
-
-
     /// <summary>
     /// This class encapsulates the various data assocuated with the accounts you have on kraken
     /// </summary>
@@ -29,11 +23,10 @@ namespace Paul.Utils
 
     public partial class AccountBalance
     {
-
         /// <summary>
-        /// the accountbalance object 
+        /// the accountbalance object
         /// an unholy union of json, c# and mexican rodeo carnies
-        /// when the app receives the JSON data fro Kraken 
+        /// when the app receives the JSON data fro Kraken
         /// newtonsoft.json deserializes the data into this handy class
         /// </summary>
         public class Result

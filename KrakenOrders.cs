@@ -2,9 +2,6 @@
 
 namespace Paul.Utils
 {
-
-    
-
     /// <summary>
     /// Submit an order to the Kraken API using Kraken.API.QueryPrivateEndpoint()
     /// </summary>

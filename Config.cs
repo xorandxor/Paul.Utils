@@ -11,8 +11,6 @@ namespace Paul.Utils
 
         public static int DataImportIntervalMIN => Convert.ToInt32(AppSettings.ReadSetting("DATA_IMPORT_INTERVAL_MIN"));
 
-
-
         public static bool EMAIL_ALERT_DB_DOWN => Convert.ToBoolean(AppSettings.ReadSetting("EMAIL_ALERT_DB_DOWN"));
         public static string ADMIN_EMAIL => Convert.ToString(AppSettings.ReadSetting("ADMIN_EMAIL"));
 

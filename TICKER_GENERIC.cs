@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace Paul.Utils
 {
@@ -180,54 +179,54 @@ namespace Paul.Utils
             public string o { get; set; }
         }
 
-
-
         #region kraken api ticker data structure
+
         /*
-         * 
+         *
          * additional property
 
         object (AssetTickerInfo)
 
         Asset Ticker Info
-        a	
+        a
         sk [<price>, <whole lot volume>, <lot volume>]
-        b	
+        b
         Array of strings
 
         Bid [<price>, <whole lot volume>, <lot volume>]
-        c	
+        c
         Array of strings
 
         Last trade closed [<price>, <lot volume>]
-        v	
+        v
         Array of strings
 
         Volume [<today>, <last 24 hours>]
-        p	
+        p
         Array of strings
 
         Volume weighted average price [<today>, <last 24 hours>]
-        t	
+        t
         Array of integers
 
         Number of trades [<today>, <last 24 hours>]
-        l	
+        l
         Array of strings
 
         Low [<today>, <last 24 hours>]
-        h	
+        h
         Array of strings
 
         High [<today>, <last 24 hours>]
-        o	
+        o
         string
 
         Today's opening price
-        error	
-        Array of strings (error) 
+        error
+        Array of strings (error)
         */
-        #endregion
+
+        #endregion kraken api ticker data structure
 
         /// <summary>
         /// save ohlc data to the mssql table using OHLC_INSERT stored proedure
@@ -239,6 +238,7 @@ namespace Paul.Utils
             double idx = 0;
 
             #region reference fields
+
             //public string assetpair { get; set; } = "";
             //public double ask { get; set; } = 0;
             //public double askwlvolume { get; set; } = 0;
@@ -257,7 +257,8 @@ namespace Paul.Utils
             //public double hightoday { get; set; } = 0;
             //public double high24hr { get; set; } = 0;
             //public double openprice { get; set; } = 0;
-            #endregion
+
+            #endregion reference fields
 
             // data structure to hold the ticker information
             TickerObject obj = new TickerObject();
@@ -290,7 +291,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save litecoin
             if (root.result.XLTCZUSD != null)
             {
@@ -319,7 +320,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save ethereum
             if (root.result.XETHZUSD != null)
             {
@@ -348,7 +349,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save doge
             if (root.result.XDGUSD != null)
             {
@@ -377,7 +378,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save monero
             if (root.result.XXMRZUSD != null)
             {
@@ -406,7 +407,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save dash
             if (root.result.DASHUSD != null)
             {
@@ -435,7 +436,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save Z Cash
             if (root.result.XZECZUSD != null)
             {
@@ -464,7 +465,7 @@ namespace Paul.Utils
 
                 idx++;
             }
-            
+
             ///save augur
             if (root.result.XREPZUSD != null)
             {

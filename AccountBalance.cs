@@ -3,11 +3,8 @@ using System.Globalization;
 
 namespace Paul.Utils
 {
-   
- 
     public partial class AccountBalance
     {
-
         /// <summary>
         /// Deserialize json data into a class object that can be access and passed around
         /// </summary>
@@ -19,8 +16,8 @@ namespace Paul.Utils
         }
 
         /// <summary>
-        /// This method displays the current number of coins in all the wallets as well as the value of each 
-        /// coin and also the total value of the portfolio... additionally, this method saves the account 
+        /// This method displays the current number of coins in all the wallets as well as the value of each
+        /// coin and also the total value of the portfolio... additionally, this method saves the account
         /// balance to the database
         /// </summary>
         public static void GetAccountBalance()
@@ -108,9 +105,5 @@ namespace Paul.Utils
             // save this set of balances to the table
             KrakenDB.AccountBalanceInsert(bal);
         }
-
-        
-
-
     }
 }
