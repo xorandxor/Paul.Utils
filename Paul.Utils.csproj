@@ -51,6 +51,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="DataStructures.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="KrakenAPI.cs" />
     <Compile Include="KrakenDB.cs" />
