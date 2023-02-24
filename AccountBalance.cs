@@ -4,6 +4,7 @@ using System.Security.Policy;
 using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace Paul.Utils
 {
@@ -31,57 +32,104 @@ namespace Paul.Utils
 
         public static void GetAccountBalance()
         {
-            DateTime st = DateTime.Now;
             string privateEndpoint = "Balance";
             string privateInputParameters = "";
             string apiPrivateKey = Config.ApiPrivateKey;
             string apiPublicKey = Config.ApiPublicKey;
 
             string privateResponse = API.QueryPrivateEndpoint(privateEndpoint, privateInputParameters, apiPublicKey, apiPrivateKey);
-            string prirespfixed = privateResponse.Replace("USD.HOLD", "USDHOLD");
-            Root acctbal = GetClassFromJson(prirespfixed);
+            Root acctbal = GetClassFromJson(privateResponse);
 
-            Logging.LogDB("Account Balance");
-
-            Console.WriteLine("****************************************** ");
-            Console.WriteLine("** ACCOUNT BALANCE                      ** ");
-            Console.WriteLine("****************************************** ");
-            Console.WriteLine("*      usd: " + acctbal.result.ZUSD);
-            Console.WriteLine("*  bitcoin: " + acctbal.result.XXBT);
-            Console.WriteLine("* litecoin: " + acctbal.result.XLTC);
-            Console.WriteLine("* ethereum: " + acctbal.result.XETH);
-            Console.WriteLine("*   monero: " + acctbal.result.XXMR);
-            Console.WriteLine("*     dash: " + acctbal.result.DASH);
-            Console.WriteLine("*   z-cash: " + acctbal.result.XZEC);
-            Console.WriteLine("*    augur: " + acctbal.result.XREP);
-            Console.WriteLine("****************************************** ");
-            Console.WriteLine(" Saving to database.. ");
 
             BalanceObject bal = new BalanceObject();
-            bal.USD = Convert.ToDouble(acctbal.result.ZUSD.ToString());
-            bal.BTC = Convert.ToDouble(acctbal.result.XXBT.ToString());
-            bal.LTC = Convert.ToDouble(acctbal.result.XLTC.ToString());
-            bal.ETH = Convert.ToDouble(acctbal.result.XETH.ToString());
-            bal.DGE = Convert.ToDouble(acctbal.result.XXDG.ToString());
-            bal.XMR = Convert.ToDouble(acctbal.result.XXMR.ToString());
-            bal.DASH = Convert.ToDouble(acctbal.result.DASH.ToString());
-            bal.ZEC = Convert.ToDouble(acctbal.result.XZEC.ToString());
-            bal.REP = Convert.ToDouble(acctbal.result.XREP.ToString());
+            if (acctbal.result.ZUSD != null)
+            {
+                bal.USD = Convert.ToDouble(acctbal.result.ZUSD.ToString());
+            }
+            if (acctbal.result.XXBT != null)
+            {
+                bal.BTC = Convert.ToDouble(acctbal.result.XXBT.ToString());
+            }
+            if (acctbal.result.XLTC != null)
+            {
+                bal.LTC = Convert.ToDouble(acctbal.result.XLTC.ToString());
+            }
+            if (acctbal.result.XETH != null)
+            {
+                bal.ETH = Convert.ToDouble(acctbal.result.XETH.ToString());
+            }
+            if (acctbal.result.XXDG != null)
+            {
+                bal.DGE = Convert.ToDouble(acctbal.result.XXDG.ToString());
+            }
+            if (acctbal.result.XXMR != null)
+            {
+                bal.XMR = Convert.ToDouble(acctbal.result.XXMR.ToString());
+            }
+            if (acctbal.result.DASH != null)
+            {
+                bal.DASH = Convert.ToDouble(acctbal.result.DASH.ToString());
+            }
+            if (acctbal.result.XZEC != null)
+            {
+                bal.ZEC = Convert.ToDouble(acctbal.result.XZEC.ToString());
+            }
+            if (acctbal.result.XREP != null) 
+            { 
+                bal.REP = Convert.ToDouble(acctbal.result.XREP.ToString()); 
+            }
 
+            Logging.LogDB("Account Balance");
+            double portfolio_value = 0;
+
+            portfolio_value += GetAssetValueUSD("XXBTZUSD") * bal.BTC;
+            portfolio_value += GetAssetValueUSD("XLTCUSD") * bal.LTC;
+            portfolio_value += GetAssetValueUSD("XETHZUSD") * bal.ETH;
+            portfolio_value += GetAssetValueUSD("XDGUSD") * bal.DGE;
+            portfolio_value += GetAssetValueUSD("XMRUSD") * bal.XMR;
+            portfolio_value += GetAssetValueUSD("DASHUSD") * bal.DASH;
+            portfolio_value += GetAssetValueUSD("XZECUSD") * bal.ZEC;
+            portfolio_value += GetAssetValueUSD("XREPZUSD") * bal.REP ;
+            
+            //whoops dont forget dollars
+            portfolio_value += bal.USD;
+
+            Console.WriteLine("****************************************** ");
+            Console.WriteLine("* ACCOUNT BALANCE                      ** ");
+            Console.WriteLine("****************************************** ");
+            Console.WriteLine("*      usd: " + bal.USD);
+            Console.WriteLine("*  bitcoin: " + bal.BTC  + " [$" + (GetAssetValueUSD("XXBTZUSD") * bal.BTC) +"]");
+            Console.WriteLine("* litecoin: " + bal.LTC  + " [$" + GetAssetValueUSD("XLTCUSD") * bal.LTC + "]");
+            Console.WriteLine("* ethereum: " + bal.ETH  + " [$" + GetAssetValueUSD("XETHZUSD") * bal.ETH+ "]");
+            Console.WriteLine("* dogecoin: " + bal.DGE  + " [$" + GetAssetValueUSD("XDGUSD")*bal.DGE + "]");
+            Console.WriteLine("*   monero: " + bal.XMR  + " [$" + GetAssetValueUSD("XMRUSD") * bal.XMR+ "]");
+            Console.WriteLine("*     dash: " + bal.DASH + " [$" + GetAssetValueUSD("DASHUSD") * bal.DASH + "]"); 
+            Console.WriteLine("*   z-cash: " + bal.ZEC  + " [$" + GetAssetValueUSD("XZECUSD") * bal.ZEC+ "]");
+            Console.WriteLine("*    augur: " + bal.REP  + " [$" + GetAssetValueUSD("XREPZUSD") * bal.REP + "]");
+            Console.WriteLine("****************************************** ");
+            Console.WriteLine("* Total Portfolio Value: " + portfolio_value.ToString("C",CultureInfo.CurrentCulture));
+            Console.WriteLine("****************************************** ");
+
+            AccountBalance_Clear();
             AccountBalance_Insert(bal);
-
-            wait(2000);
         }
 
-        public static void ClearBalanceTable()
+        private static double GetAssetValueUSD(string assetpair)
+        {
+            SqlParameter[] p = new SqlParameter[1];
+            p[0] = new SqlParameter("@assetpair", SqlDbType.NVarChar, 50){ Value = assetpair };
+            double price = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "TICKER_GET_CurrentPrice", p));
+            return price;
+        
+        }
+
+        public static void AccountBalance_Clear()
         {
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "AccountBalance_DELETE_ALL");
         }
         public static void AccountBalance_Insert(BalanceObject bal)
         {
 
-            // first we clear out the balance table
-            ClearBalanceTable();
 
             #region reference 
             //CREATE PROCEDURE[dbo].[AccountBalance_INSERT]
@@ -143,11 +191,6 @@ namespace Paul.Utils
             /// Litecoin Balance
             /// </summary>
             public string XLTC { get; set; }
-
-            /// <summary>
-            /// Link Balance "XZEC":"0.1500000000","XXMR":"0.1000000000"
-            /// </summary>
-            public string LINK { get; set; }
 
             /// <summary>
             /// Monero Balance

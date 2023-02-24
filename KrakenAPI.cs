@@ -177,6 +177,7 @@ namespace Paul.Utils
 
             string apiEndpointFullURL = baseDomain + privatePath + endpointName;
             string nonce = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+           
             if (string.IsNullOrWhiteSpace(inputParameters) == false)
             {
                 inputParameters = "&" + inputParameters;
