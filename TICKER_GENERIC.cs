@@ -55,18 +55,18 @@ namespace Paul.Utils
         public double openprice { get; set; } = 0;
     }
 
-    internal class TICKER_GENERIC
+    public class TICKER_GENERIC
     {
         // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
         public class Result
         {
             public XXBTZUSD XXBTZUSD { get; set; }
-            public XLTCUSD XLTCUSD { get; set; }
+            public XLTCZUSD XLTCZUSD { get; set; }
             public XETHZUSD XETHZUSD { get; set; }
             public XDGUSD XDGUSD { get; set; }
-            public XMRUSD XMRUSD { get; set; }
+            public XXMRZUSD XXMRZUSD { get; set; }
             public DASHUSD DASHUSD { get; set; }
-            public XZECUSD XZECUSD { get; set; }
+            public XZECUSD XZECZUSD { get; set; }//XZECZUSD
             public XREPZUSD XREPZUSD { get; set; }
         }
 
@@ -89,7 +89,7 @@ namespace Paul.Utils
             public string o { get; set; }
         }
 
-        public class XLTCUSD
+        public class XLTCZUSD
         {
             public List<string> a { get; set; }
             public List<string> b { get; set; }
@@ -128,7 +128,7 @@ namespace Paul.Utils
             public string o { get; set; }
         }
 
-        public class XMRUSD
+        public class XXMRZUSD
         {
             public List<string> a { get; set; }
             public List<string> b { get; set; }
@@ -268,7 +268,7 @@ namespace Paul.Utils
                 Console.WriteLine("XXBTZUSD Ticker: Ask: $" + root.result.XXBTZUSD.a[0]);
 
                 obj.assetpair = "XXBTZUSD";
-                obj.ask = Convert.ToDouble(root.result.XXBTZUSD.a[0]);
+                obj.ask = (double)Convert.ToDecimal(root.result.XXBTZUSD.a[0]);
                 obj.askwlvolume = Convert.ToDouble(root.result.XXBTZUSD.a[1]);
                 obj.asklotvolume = Convert.ToDouble(root.result.XXBTZUSD.a[2]);
                 obj.bid = Convert.ToDouble(root.result.XXBTZUSD.b[0]);
@@ -292,28 +292,28 @@ namespace Paul.Utils
             }
             
             ///save litecoin
-            if (root.result.XLTCUSD != null)
+            if (root.result.XLTCZUSD != null)
             {
-                Console.WriteLine("XLTCUSD Ticker: Ask: $" + root.result.XLTCUSD.a[0]);
+                Console.WriteLine("XLTCUSD Ticker: Ask: $" + root.result.XLTCZUSD.a[0]);
 
                 obj.assetpair = "XLTCUSD";
-                obj.ask = Convert.ToDouble(root.result.XLTCUSD.a[0]);
-                obj.askwlvolume = Convert.ToDouble(root.result.XLTCUSD.a[1]);
-                obj.asklotvolume = Convert.ToDouble(root.result.XLTCUSD.a[2]);
-                obj.bid = Convert.ToDouble(root.result.XLTCUSD.b[0]);
-                obj.bidwlvolume = Convert.ToDouble(root.result.XLTCUSD.b[1]);
-                obj.bidlotvolume = Convert.ToDouble(root.result.XLTCUSD.b[2]);
-                obj.volumetoday = Convert.ToDouble(root.result.XLTCUSD.v[0]);
-                obj.volume24hr = Convert.ToDouble(root.result.XLTCUSD.v[1]);
-                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XLTCUSD.p[0]);
-                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XLTCUSD.p[1]);
-                obj.numberoftradestoday = Convert.ToDouble(root.result.XLTCUSD.t[0]);
-                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XLTCUSD.t[1]);
-                obj.lowtoday = Convert.ToDouble(root.result.XLTCUSD.l[0]);
-                obj.low24hr = Convert.ToDouble(root.result.XLTCUSD.l[1]);
-                obj.hightoday = Convert.ToDouble(root.result.XLTCUSD.h[0]);
-                obj.high24hr = Convert.ToDouble(root.result.XLTCUSD.h[1]);
-                obj.openprice = Convert.ToDouble(root.result.XLTCUSD.o);
+                obj.ask = Convert.ToDouble(root.result.XLTCZUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XLTCZUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XLTCZUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XLTCZUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XLTCZUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XLTCZUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XLTCZUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XLTCZUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XLTCZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XLTCZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XLTCZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XLTCZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XLTCZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XLTCZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XLTCZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XLTCZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XLTCZUSD.o);
 
                 SaveTickerRecord(obj);
 
@@ -352,7 +352,7 @@ namespace Paul.Utils
             ///save doge
             if (root.result.XDGUSD != null)
             {
-                Console.WriteLine("XDGUSD Ticker: Ask: $" + root.result.XXBTZUSD.a[0]);
+                Console.WriteLine("XDGUSD Ticker: Ask: $" + root.result.XDGUSD.a[0]);
 
                 obj.assetpair = "XDGUSD";
                 obj.ask = Convert.ToDouble(root.result.XDGUSD.a[0]);
@@ -379,28 +379,28 @@ namespace Paul.Utils
             }
             
             ///save monero
-            if (root.result.XMRUSD != null)
+            if (root.result.XXMRZUSD != null)
             {
-                Console.WriteLine("XMRUSD Ticker: Ask: $" + root.result.XMRUSD.a[0]);
+                Console.WriteLine("XMRUSD Ticker: Ask: $" + root.result.XXMRZUSD.a[0]);
 
                 obj.assetpair = "XMRUSD";
-                obj.ask = Convert.ToDouble(root.result.XMRUSD.a[0]);
-                obj.askwlvolume = Convert.ToDouble(root.result.XMRUSD.a[1]);
-                obj.asklotvolume = Convert.ToDouble(root.result.XMRUSD.a[2]);
-                obj.bid = Convert.ToDouble(root.result.XMRUSD.b[0]);
-                obj.bidwlvolume = Convert.ToDouble(root.result.XMRUSD.b[1]);
-                obj.bidlotvolume = Convert.ToDouble(root.result.XMRUSD.b[2]);
-                obj.volumetoday = Convert.ToDouble(root.result.XMRUSD.v[0]);
-                obj.volume24hr = Convert.ToDouble(root.result.XMRUSD.v[1]);
-                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XMRUSD.p[0]);
-                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XMRUSD.p[1]);
-                obj.numberoftradestoday = Convert.ToDouble(root.result.XMRUSD.t[0]);
-                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XMRUSD.t[1]);
-                obj.lowtoday = Convert.ToDouble(root.result.XMRUSD.l[0]);
-                obj.low24hr = Convert.ToDouble(root.result.XMRUSD.l[1]);
-                obj.hightoday = Convert.ToDouble(root.result.XMRUSD.h[0]);
-                obj.high24hr = Convert.ToDouble(root.result.XMRUSD.h[1]);
-                obj.openprice = Convert.ToDouble(root.result.XMRUSD.o);
+                obj.ask = Convert.ToDouble(root.result.XXMRZUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XXMRZUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XXMRZUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XXMRZUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XXMRZUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XXMRZUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XXMRZUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XXMRZUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XXMRZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XXMRZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XXMRZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XXMRZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XXMRZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XXMRZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XXMRZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XXMRZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XXMRZUSD.o);
 
                 SaveTickerRecord(obj);
 
@@ -437,28 +437,28 @@ namespace Paul.Utils
             }
             
             ///save Z Cash
-            if (root.result.XZECUSD != null)
+            if (root.result.XZECZUSD != null)
             {
-                Console.WriteLine("XZECUSD Ticker: Ask: $" + root.result.XZECUSD.a[0]);
+                Console.WriteLine("XZECUSD Ticker: Ask: $" + root.result.XZECZUSD.a[0]);
 
                 obj.assetpair = "XZECUSD";
-                obj.ask = Convert.ToDouble(root.result.XZECUSD.a[0]);
-                obj.askwlvolume = Convert.ToDouble(root.result.XZECUSD.a[1]);
-                obj.asklotvolume = Convert.ToDouble(root.result.XZECUSD.a[2]);
-                obj.bid = Convert.ToDouble(root.result.XZECUSD.b[0]);
-                obj.bidwlvolume = Convert.ToDouble(root.result.XZECUSD.b[1]);
-                obj.bidlotvolume = Convert.ToDouble(root.result.XZECUSD.b[2]);
-                obj.volumetoday = Convert.ToDouble(root.result.XZECUSD.v[0]);
-                obj.volume24hr = Convert.ToDouble(root.result.XZECUSD.v[1]);
-                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XZECUSD.p[0]);
-                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XZECUSD.p[1]);
-                obj.numberoftradestoday = Convert.ToDouble(root.result.XZECUSD.t[0]);
-                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XZECUSD.t[1]);
-                obj.lowtoday = Convert.ToDouble(root.result.XZECUSD.l[0]);
-                obj.low24hr = Convert.ToDouble(root.result.XZECUSD.l[1]);
-                obj.hightoday = Convert.ToDouble(root.result.XZECUSD.h[0]);
-                obj.high24hr = Convert.ToDouble(root.result.XZECUSD.h[1]);
-                obj.openprice = Convert.ToDouble(root.result.XZECUSD.o);
+                obj.ask = Convert.ToDouble(root.result.XZECZUSD.a[0]);
+                obj.askwlvolume = Convert.ToDouble(root.result.XZECZUSD.a[1]);
+                obj.asklotvolume = Convert.ToDouble(root.result.XZECZUSD.a[2]);
+                obj.bid = Convert.ToDouble(root.result.XZECZUSD.b[0]);
+                obj.bidwlvolume = Convert.ToDouble(root.result.XZECZUSD.b[1]);
+                obj.bidlotvolume = Convert.ToDouble(root.result.XZECZUSD.b[2]);
+                obj.volumetoday = Convert.ToDouble(root.result.XZECZUSD.v[0]);
+                obj.volume24hr = Convert.ToDouble(root.result.XZECZUSD.v[1]);
+                obj.volweightedavgpricetoday = Convert.ToDouble(root.result.XZECZUSD.p[0]);
+                obj.volweightedavgprice24hr = Convert.ToDouble(root.result.XZECZUSD.p[1]);
+                obj.numberoftradestoday = Convert.ToDouble(root.result.XZECZUSD.t[0]);
+                obj.Numberoftrades24hrs = Convert.ToDouble(root.result.XZECZUSD.t[1]);
+                obj.lowtoday = Convert.ToDouble(root.result.XZECZUSD.l[0]);
+                obj.low24hr = Convert.ToDouble(root.result.XZECZUSD.l[1]);
+                obj.hightoday = Convert.ToDouble(root.result.XZECZUSD.h[0]);
+                obj.high24hr = Convert.ToDouble(root.result.XZECZUSD.h[1]);
+                obj.openprice = Convert.ToDouble(root.result.XZECZUSD.o);
 
                 SaveTickerRecord(obj);
 
@@ -583,7 +583,7 @@ namespace Paul.Utils
             sp[16] = new SqlParameter("@high24hr", System.Data.SqlDbType.Decimal);
             sp[16].Value = o.high24hr;
 
-            sp[17] = new SqlParameter("@open", System.Data.SqlDbType.Int);
+            sp[17] = new SqlParameter("@openprice", System.Data.SqlDbType.Decimal);
             sp[17].Value = o.openprice;
 
             try
@@ -592,8 +592,9 @@ namespace Paul.Utils
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.ToString());
                 Logging.LogDB(ex.ToString());
+                Console.ReadKey();
             }
         }
     }
