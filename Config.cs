@@ -21,5 +21,13 @@ namespace Paul.Utils
         public static string EMAIL_USERNAME => Convert.ToString(AppSettings.ReadSetting("EMAIL_USERNAME"));
         public static string EMAIL_PASSWORD => Convert.ToString(AppSettings.ReadSetting("EMAIL_PASSWORD"));
         public static bool EMAIL_USE_SSL => Convert.ToBoolean(AppSettings.ReadSetting("ADMIN_USE_SSL"));
+
+        //OPTION_LOG_DB_ERRORS_TO_CONSOLE & OPTION_LOG_API_ERRORS_TO_CONSOLE
+
+        // Option flags to control app behavior
+        public static bool OPTION_LOG_DB_ERRORS_TO_CONSOLE => Convert.ToBoolean(AppSettings.ReadSetting("OPTION_LOG_DB_ERRORS_TO_CONSOLE"));
+        public static bool OPTION_LOG_API_ERRORS_TO_CONSOLE => Convert.ToBoolean(AppSettings.ReadSetting("OPTION_LOG_API_ERRORS_TO_CONSOLE"));
+
+
     }
 }

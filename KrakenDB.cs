@@ -14,9 +14,20 @@ namespace Paul.Utils
         /// <returns>Price of assetpair in dollars</returns>
         public static double GetAssetValueUSD(string assetpair)
         {
-            SqlParameter[] p = new SqlParameter[1];
-            p[0] = new SqlParameter("@assetpair", SqlDbType.NVarChar, 50) { Value = assetpair };
-            double price = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "TICKER_GET_CurrentPrice", p));
+            double price = 0;
+            try
+            {
+                SqlParameter[] p = new SqlParameter[1];
+                p[0] = new SqlParameter("@assetpair", SqlDbType.NVarChar, 50) { Value = assetpair };
+                price = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "TICKER_GET_CurrentPrice", p));
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
             return price;
         }
 
@@ -25,11 +36,21 @@ namespace Paul.Utils
         /// </summary>
         public static void AccountBalanceClear()
         {
-            SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "AccountBalance_DELETE_ALL");
+            try
+            {
+                SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "AccountBalance_DELETE_ALL");
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
 
         /// <summary>
-        /// add a recors to the accountbalance table
+        /// add a record to the accountbalance table
         /// </summary>
         /// <param name="bal"></param>
         public static void AccountBalanceInsert(BalanceObject bal)
@@ -83,6 +104,8 @@ namespace Paul.Utils
             }
             catch (Exception ex) // if sql server is down then write an error to the system log
             {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE) { Console.WriteLine(ex.ToString()); }
+
                 Logging.WriteToEventLog("Application", "Paul.Utils", "Exception Occurred: " + ex.ToString(), EventLogEntryType.Error);
             }
         }
