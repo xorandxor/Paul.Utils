@@ -1,6 +1,6 @@
 ﻿namespace Paul.Utils
 {
-    #region enums plurbus
+    #region enumus plurbius
 
     /// <summary>
     /// Self explanatory x
@@ -48,7 +48,7 @@
     /// note: must be a multimillionaire to use this feature
     /// (cocksuckers)
     /// </summary>
-    public enum LeverageLevel
+    public enum KrakenLeverageLevel
     {
         None = 0,
         TwoToOne = 1,
@@ -57,5 +57,5 @@
         FiveToOne = 4
     }
 
-    #endregion enums plurbus
+    #endregion enumus plurbius
 }

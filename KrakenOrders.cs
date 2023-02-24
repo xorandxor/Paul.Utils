@@ -16,7 +16,7 @@ namespace Paul.Utils
         private String closePrice2 = "";
         private string deadline = "";
         private string expireTime = "";
-        private LeverageLevel leverage = LeverageLevel.None;
+        private KrakenLeverageLevel leverage = KrakenLeverageLevel.None;
         private string ofFlags = "";
         private KrakenOrderType orderType = KrakenOrderType.Market;
         private string pair = "";
@@ -55,7 +55,7 @@ namespace Paul.Utils
             KrakenOrderType pOrderType,
             string pPrice,
             string pVolume,
-            LeverageLevel pLeverage)
+            KrakenLeverageLevel pLeverage)
         {
             this.pair = pPair;
             this.type = pBuyOrSell;
@@ -83,7 +83,7 @@ namespace Paul.Utils
             KrakenOrderType pOrderType,
             string pPrice,
             string pVolume,
-            LeverageLevel pLeverage,
+            KrakenLeverageLevel pLeverage,
             KrakenCloseOrderType pCloseOrderType,
             string pClosePrice,
             string PClosePrice2
@@ -111,7 +111,7 @@ namespace Paul.Utils
         public string ClosePrice2 { get => closePrice2; set => closePrice2 = value; }
         public string Deadline { get => deadline; set => deadline = value; }
         public string ExpireTime { get => expireTime; set => expireTime = value; }
-        public LeverageLevel Leverage { get => leverage; set => leverage = value; }
+        public KrakenLeverageLevel Leverage { get => leverage; set => leverage = value; }
         public string OfFlags { get => ofFlags; set => ofFlags = value; }
         public KrakenOrderType OrderType { get => orderType; set => orderType = value; }
         public string Pair { get => pair; set => pair = value; }

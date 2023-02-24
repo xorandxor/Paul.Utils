@@ -15,14 +15,6 @@ namespace Paul.Utils
     /// </summary>
     public class API
     {
-        #region Fields
-
-        private string apiPrivateKey = Config.ApiPrivateKey;
-
-        private string apiPublicKey = Config.ApiPublicKey;
-
-        #endregion Fields
-
         #region Public Methods
 
         /// <summary> rewrite as synchronous </summary>
