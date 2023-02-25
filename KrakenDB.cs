@@ -8,30 +8,6 @@ namespace Paul.Utils
     public static class KrakenDB
     {
         /// <summary>
-        /// gets the value is USD of an assetpair from the database
-        /// </summary>
-        /// <param name="assetpair">XXBTCZUSD for example</param>
-        /// <returns>Price of assetpair in dollars</returns>
-        public static double GetAssetValueUSD(string assetpair)
-        {
-            double price = 0;
-            try
-            {
-                SqlParameter[] p = new SqlParameter[1];
-                p[0] = new SqlParameter("@assetpair", SqlDbType.NVarChar, 50) { Value = assetpair };
-                price = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "TICKER_GET_CurrentPrice", p));
-            }
-            catch (Exception ex)
-            {
-                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-            return price;
-        }
-
-        /// <summary>
         /// delete all records from accountbalance table
         /// </summary>
         public static void AccountBalanceClear()
@@ -84,6 +60,61 @@ namespace Paul.Utils
             SqlHelper.ExecuteNonQuery(Config.DBConn, CommandType.StoredProcedure, "AccountBalance_Insert", p);
         }
 
+        public static double Get_USD_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_BAL_USD"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        public static double Get_USD_Price()
+        {
+            return 1;
+        }
+
+        /// <summary>
+        /// gets the value is USD of an assetpair from the database
+        /// </summary>
+        /// <param name="assetpair">XXBTCZUSD for example</param>
+        /// <returns>Price of assetpair in dollars</returns>
+        public static double GetAssetValueUSD(string assetpair)
+        {
+            double price = 0;
+            try
+            {
+                SqlParameter[] p = new SqlParameter[1];
+                p[0] = new SqlParameter("@assetpair", SqlDbType.NVarChar, 50) { Value = assetpair };
+                price = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "TICKER_GET_CurrentPrice", p));
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return price;
+        }
+
+        #region bitcoin
+
         public static double Get_BTC_Balance()
         {
             double _out = 0;
@@ -107,6 +138,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_BTC_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_BTC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion bitcoin
+
+        #region ethereum
+
         public static double Get_ETH_Balance()
         {
             double _out = 0;
@@ -131,6 +191,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_ETH_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_ETH"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion ethereum
+
+        #region litecoin
+
         public static double Get_LTC_Balance()
         {
             double _out = 0;
@@ -155,6 +244,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_LTC_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_LTC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion litecoin
+
+        #region doge
+
         public static double Get_DGE_Balance()
         {
             double _out = 0;
@@ -179,6 +297,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_DGE_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_DGE"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion doge
+
+        #region xmr
+
         public static double Get_XMR_Balance()
         {
             double _out = 0;
@@ -203,6 +350,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_XMR_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_XMR"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion xmr
+
+        #region dash
+
         public static double Get_DASH_Balance()
         {
             double _out = 0;
@@ -227,6 +403,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_DASH_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_DASH"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion dash
+
+        #region Z-Cash
+
         public static double Get_ZEC_Balance()
         {
             double _out = 0;
@@ -251,6 +456,35 @@ namespace Paul.Utils
             }
             return _out;
         }
+
+        public static double Get_ZEC_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_ZEC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+        #endregion Z-Cash
+
+        #region Rep
+
         public static double Get_REP_Balance()
         {
             double _out = 0;
@@ -276,7 +510,31 @@ namespace Paul.Utils
             return _out;
         }
 
+        public static double Get_REP_Price()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_PRICE_REP"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
 
+        #endregion Rep
 
         /// <summary>
         /// Log messages to the database

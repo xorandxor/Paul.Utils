@@ -38,6 +38,8 @@ namespace Paul.Utils
             API.APICooldown(2000);
 
         }
+
+        #region BTC Actions
         public static void SellAllBTCMarket()
         {
             double btcbal = KrakenDB.Get_BTC_Balance();
@@ -58,6 +60,31 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllBTCMarket() called but btc balance is " + btcbal + "... Aborting.");
             }
         }
+        public static void BuyMaxBTC()
+        {
+            double btcbal = KrakenDB.Get_BTC_Balance();
+            double usdbal = KrakenDB.Get_USD_Balance();
+            
+            // little fudge factor when submitting market orders
+            // leave a little money on the table but the probability of your
+            // trade being executed goes way up
+            usdbal *= .95; 
+            
+                Order o = new Order();
+                o.Leverage = KrakenLeverageLevel.None;
+                o.OrderType = KrakenOrderType.Market;
+                o.Pair = "XBTUSD";
+                o.Type = BuyOrSellType.Buy;
+                o.Volume = Convert.ToString(btcbal);
+                string x = o.SubmitOrder();
+                string y = "";
+            
+        }
+
+        #endregion
+
+        #region LTC Actions
+
         public static void SellAllLTCMarket()
         {
             double balance = KrakenDB.Get_LTC_Balance();
@@ -78,6 +105,25 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllLTCMarket() called but LTC balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxLTC()
+        {
+            double btcbal = KrakenDB.Get_BTC_Balance();
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "XBTUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Volume = Convert.ToString(btcbal);
+            string x = o.SubmitOrder();
+            string y = "";
+
+        }
+
+        #endregion
+
         public static void SellAllETHMarket()
         {
             double balance = KrakenDB.Get_ETH_Balance();
