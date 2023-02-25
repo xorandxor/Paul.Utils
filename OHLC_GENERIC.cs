@@ -4,22 +4,6 @@ using System.Data.SqlClient;
 
 namespace Paul.Utils
 {
-    public class OHLCObject
-    {
-        public OHLCObject()
-        { }
-
-        public string AssetPair { get; set; }
-        public DateTime timestamp { get; set; }
-        public double OpenPrice { get; set; }
-        public double HighPrice { get; set; }
-        public double LowPrice { get; set; }
-        public double ClosePrice { get; set; }
-        public double VolWeightedAvgPrice { get; set; }
-        public double Volume { get; set; }
-        public double Count { get; set; }
-    }
-
     /// <summary>
     /// class to hold Open High Low Close Data from Kraken API
     /// </summary>
@@ -27,31 +11,23 @@ namespace Paul.Utils
     {
         //Array of strings or integers(TickData) [items[items = 8 items] ]
 
-        // Array of tick data arrays[int < time >,
-        // string < open >,
-        // string < high >,
-        // string < low >,
-        // string < close >,
-        // string < vwap >,
-        // string < volume >,
-        // int < count >]
-        public static Root GetClassFromJson(string myJsonResponse)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(myJsonResponse);
-        }
-
         public class Result
         {
-            public List<List<object>> XXBTZUSD { get; set; }
+            public List<List<object>> DASHUSD { get; set; }
+            public int last { get; set; }
+            public List<List<object>> XDGUSD { get; set; }
             public List<List<object>> XETHZUSD { get; set; }
             public List<List<object>> XLTCZUSD { get; set; }
-            public List<List<object>> XDGUSD { get; set; }
             public List<List<object>> XMRUSD { get; set; }
-            public List<List<object>> DASHUSD { get; set; }
-            public List<List<object>> XZECUSD { get; set; }
             public List<List<object>> XREPZUSD { get; set; }
+            public List<List<object>> XXBTZUSD { get; set; }
+            public List<List<object>> XZECUSD { get; set; }
+        }
 
-            public int last { get; set; }
+        public class Root
+        {
+            public List<object> error { get; set; }
+            public Result result { get; set; }
         }
 
         public static void ClearOHLCTable(string pairname)
@@ -65,6 +41,19 @@ namespace Paul.Utils
         {
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_DELETE_ALL");
             SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "OHLC_SET_STATUS_LOADING");
+        }
+
+        // Array of tick data arrays[int < time >,
+        // string < open >,
+        // string < high >,
+        // string < low >,
+        // string < close >,
+        // string < vwap >,
+        // string < volume >,
+        // int < count >]
+        public static Root GetClassFromJson(string myJsonResponse)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(myJsonResponse);
         }
 
         /// <summary>
@@ -339,11 +328,21 @@ namespace Paul.Utils
                 Logging.LogDB(ex.ToString());
             }
         }
+    }
 
-        public class Root
-        {
-            public List<object> error { get; set; }
-            public Result result { get; set; }
-        }
+    public class OHLCObject
+    {
+        public OHLCObject()
+        { }
+
+        public string AssetPair { get; set; }
+        public double ClosePrice { get; set; }
+        public double Count { get; set; }
+        public double HighPrice { get; set; }
+        public double LowPrice { get; set; }
+        public double OpenPrice { get; set; }
+        public DateTime timestamp { get; set; }
+        public double Volume { get; set; }
+        public double VolWeightedAvgPrice { get; set; }
     }
 }

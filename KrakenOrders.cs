@@ -8,8 +8,6 @@ namespace Paul.Utils
     /// </summary>
     public class Order
     {
-        #region Private Fields
-
         private string apiPrivKey = Config.ApiPrivateKey;
         private string apiPubKey = Config.ApiPublicKey;
         private KrakenCloseOrderType closeOrderType = KrakenCloseOrderType.StopLoss;
@@ -30,10 +28,6 @@ namespace Paul.Utils
         private int userRef = 0;
         private bool validate = false;
         private string volume = "";
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         /// <summary>
         /// blank constructor
@@ -101,10 +95,6 @@ namespace Paul.Utils
             this.closePrice2 = PClosePrice2;
         }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
         //test
         public KrakenCloseOrderType CloseOrderType { get => closeOrderType; set => closeOrderType = value; }
 
@@ -126,9 +116,10 @@ namespace Paul.Utils
         public bool Validate { get => validate; set => validate = value; }
         public string Volume { get => volume; set => volume = value; }
 
-        #endregion Public Properties
-
-        #region Public Methods
+        public static void SellAllBitcoinMarket()
+        {
+            AccountBalance bal = new AccountBalance();
+        }
 
         /// <summary>
         /// only call this method once all the internal variables are filled or it will blow up bigly
@@ -156,7 +147,7 @@ namespace Paul.Utils
                 error = true;
                 errormessage += "[Volume not specified] ";
             }
-            if( (string.IsNullOrEmpty(price)) && (OrderType != KrakenOrderType.Market))
+            if ((string.IsNullOrEmpty(price)) && (OrderType != KrakenOrderType.Market))
             {
                 error = true;
                 errormessage += "[Price not specified] ";
@@ -232,13 +223,12 @@ namespace Paul.Utils
                     Console.WriteLine("Submitting order with paramneters:[" + priInParams + "]");
 
                     privateResponse = API.QueryPrivateEndpoint(priEndPoint, priInParams, apiPubKey, apiPrivKey);
-                
-                OrderReply.Root cls = JsonConvert.DeserializeObject<OrderReply.Root>(privateResponse);
-                    if(cls.error.Count > 0) 
-                    { 
-                        Console.WriteLine(cls.error[0].ToString()); 
-                    }
 
+                    OrderReply.Root cls = JsonConvert.DeserializeObject<OrderReply.Root>(privateResponse);
+                    if (cls.error.Count > 0)
+                    {
+                        Console.WriteLine(cls.error[0].ToString());
+                    }
                 }
                 catch (Exception e)
                 {
@@ -249,7 +239,6 @@ namespace Paul.Utils
                 Logging.Log(Config.Logfile, "Kraken Response: " + privateResponse, true);
 
                 /// TODO: check private response for errors and log the transaction ID to sql database
-
             }
             else
             {
@@ -257,14 +246,5 @@ namespace Paul.Utils
             }
             return privateResponse;
         }
-
-        public static void SellAllBitcoinMarket()
-        {
-            AccountBalance bal = new AccountBalance();
-            
-        }
-
-
-        #endregion Public Methods
     }
 }
