@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Paul.Utils
 {
@@ -155,7 +156,7 @@ namespace Paul.Utils
                 error = true;
                 errormessage += "[Volume not specified] ";
             }
-            if (string.IsNullOrEmpty(price))
+            if( (string.IsNullOrEmpty(price)) && (OrderType != KrakenOrderType.Market))
             {
                 error = true;
                 errormessage += "[Price not specified] ";
@@ -179,7 +180,13 @@ namespace Paul.Utils
             if (error == false)
             {
                 priInParams += "pair=" + Pair.ToLower() + "&";
-                priInParams += "price=" + this.Price.ToLower() + "&";
+
+                // price isn't required on market orders
+                if (OrderType != KrakenOrderType.Market)
+                {
+                    priInParams += "price=" + this.Price.ToLower() + "&";
+                }
+
                 priInParams += "volume=" + this.Volume.ToLower() + "&";
                 priInParams += "type=" + this.Type.ToString().ToLower() + "&";
                 priInParams += "ordertype=" + this.OrderType.ToString().ToLower() + "&";
@@ -222,13 +229,19 @@ namespace Paul.Utils
                 // this try/catch is for the web request itself (wifi disconnected, request timed out, dns failure etc)
                 try
                 {
-                    Logging.Log(Config.Logfile, "Submitting order with paramneters:[" + priInParams + "]", true);
+                    Console.WriteLine("Submitting order with paramneters:[" + priInParams + "]");
 
                     privateResponse = API.QueryPrivateEndpoint(priEndPoint, priInParams, apiPubKey, apiPrivKey);
+                
+                OrderReply.Root cls = JsonConvert.DeserializeObject<OrderReply.Root>(privateResponse);
+                    if(cls.error.Count > 0) 
+                    { 
+                        Console.WriteLine(cls.error[0].ToString()); 
+                    }
+
                 }
                 catch (Exception e)
                 {
-                    Logging.Log(Config.Logfile, "error in Order.AddOrder(): " + e.ToString(), true);
                     Console.WriteLine("error in Order.AddOrder(): " + e.ToString());
                 }
 
@@ -237,7 +250,6 @@ namespace Paul.Utils
 
                 /// TODO: check private response for errors and log the transaction ID to sql database
 
-                System.Console.WriteLine(privateResponse);
             }
             else
             {
@@ -245,6 +257,13 @@ namespace Paul.Utils
             }
             return privateResponse;
         }
+
+        public static void SellAllBitcoinMarket()
+        {
+            AccountBalance bal = new AccountBalance();
+            
+        }
+
 
         #endregion Public Methods
     }

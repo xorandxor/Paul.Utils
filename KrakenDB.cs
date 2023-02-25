@@ -38,7 +38,7 @@ namespace Paul.Utils
         {
             try
             {
-                SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "AccountBalance_DELETE_ALL");
+                SqlHelper.ExecuteNonQuery(Config.DBConn, System.Data.CommandType.StoredProcedure, "ACCOUNTBALANCE_DELETE_ALL");
             }
             catch (Exception ex)
             {
@@ -83,6 +83,32 @@ namespace Paul.Utils
             p[8] = new SqlParameter("@rep", SqlDbType.Decimal) { Value = Convert.ToDecimal(bal.REP) };
             SqlHelper.ExecuteNonQuery(Config.DBConn, CommandType.StoredProcedure, "AccountBalance_Insert", p);
         }
+
+        public static double Get_BTC_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(Config.DBConn, CommandType.StoredProcedure, "GET_BAL_BTC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+
+       
 
         /// <summary>
         /// Log messages to the database

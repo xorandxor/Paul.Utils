@@ -49,15 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="Actions.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DataStructures.cs" />
-    <Compile Include="Email.cs" />
+    <Compile Include="MailTool.cs" />
     <Compile Include="KrakenAPI.cs" />
     <Compile Include="KrakenDB.cs" />
     <Compile Include="KrakenOrders.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="OHLC_GENERIC.cs" />
+    <Compile Include="OpenOrders.cs" />
+    <Compile Include="OrderObj.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccountBalance.cs" />

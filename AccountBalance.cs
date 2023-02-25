@@ -68,7 +68,6 @@ namespace Paul.Utils
                 bal.REP = Convert.ToDouble(acctbal.result.XREP.ToString());
             }
 
-            Logging.LogDB("Account Balance");
             double portfolio_value = 0;
 
             portfolio_value += KrakenDB.GetAssetValueUSD("XXBTZUSD") * bal.BTC;

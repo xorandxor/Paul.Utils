@@ -17,6 +17,28 @@ namespace Paul.Utils
     {
         #region Public Methods
 
+        public static void APICooldown(int msec)
+        {
+            System.Threading.Thread.Sleep(msec);
+        }
+
+        public static string GetOHLCJsonData(string pairname, int intervl)
+        {
+            string publicEndpoint = "OHLC";
+            string publicInputParameters = "pair=" + pairname + "&interval=15";
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+
+            return publicResponse;
+        }
+
+        public static string GetTickerJsonData(string pairname)
+        {
+            string publicEndpoint = "Ticker";
+            string publicInputParameters = "pair=" + pairname;
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+            return publicResponse;
+        }
+
         /// <summary> rewrite as synchronous </summary>
         /// <param name="endpointName">AddOrder</param>
         /// <param name="inputParameters">pair=x&price=y</param>
@@ -45,16 +67,26 @@ namespace Paul.Utils
                                                              inputParameters);
             string jsonData = "";
 
-            using (System.Net.WebClient client = new System.Net.WebClient())
+            try
             {
-                client.Headers.Clear();
-                client.Headers.Add("API-Key", apiPublicKey);
-                client.Headers.Add("API-Sign", signature);
-                client.Headers.Add("User-Agent", "KrakenDotNet Client");
-                StringContent data = new StringContent(apiPostBodyData, Encoding.UTF8, "application/x-www-form-urlencoded");
-                string stringToUpload = data.ToString();
-                string response = client.UploadString(apiEndpointFullURL, apiPostBodyData);
-                jsonData = response;
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    client.Headers.Clear();
+                    client.Headers.Add("API-Key", apiPublicKey);
+                    client.Headers.Add("API-Sign", signature);
+                    client.Headers.Add("User-Agent", "KrakenDotNet Client");
+                    StringContent data = new StringContent(apiPostBodyData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    string stringToUpload = data.ToString();
+                    string response = client.UploadString(apiEndpointFullURL, apiPostBodyData);
+                    jsonData = response;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_API_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
             return jsonData;
         }
@@ -78,36 +110,14 @@ namespace Paul.Utils
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
-                    Logging.Log("Exception Occurred:" + e.ToString());
+                    if (Config.OPTION_LOG_API_ERRORS_TO_CONSOLE)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
                 }
                 return jsonData;
             }
         }
-
-        public static string GetOHLCJsonData(string pairname, int intervl)
-        {
-            string publicEndpoint = "OHLC";
-            string publicInputParameters = "pair=" + pairname + "&interval=15";
-            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
-
-            return publicResponse;
-        }
-
-        public static string GetTickerJsonData(string pairname)
-        {
-            string publicEndpoint = "Ticker";
-            string publicInputParameters = "pair=" + pairname;
-            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
-            return publicResponse;
-        }
-
-        public static void APICooldown(int msec)
-        {
-            Console.WriteLine("Sleeping for [" + msec + "] ms. (API COOLDOWN)");
-            System.Threading.Thread.Sleep(msec);
-        }
-
         #endregion Public Methods
 
         #region Private Methods
