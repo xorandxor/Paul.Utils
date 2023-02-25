@@ -84,6 +84,10 @@ namespace Paul.Utils
             return _out;
         }
 
+        /// <summary>
+        /// IM A FUNNY GUY
+        /// </summary>
+        /// <returns></returns>
         public static double Get_USD_Price()
         {
             return 1;
