@@ -107,8 +107,176 @@ namespace Paul.Utils
             }
             return _out;
         }
+        public static double Get_ETH_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_ETH"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_LTC_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_LTC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_DGE_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_DGE"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_XMR_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_XMR"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_DASH_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_DASH"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_ZEC_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_ZEC"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
+        public static double Get_REP_Balance()
+        {
+            double _out = 0;
+            try
+            {
+                _out = Convert.ToDouble(SqlHelper.ExecuteScalar(
+                    Config.DBConn, CommandType.StoredProcedure, "GET_BAL_REP"));
+            }
+            catch (SqlException s_ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(s_ex.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Config.OPTION_LOG_DB_ERRORS_TO_CONSOLE)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            return _out;
+        }
 
-       
+
 
         /// <summary>
         /// Log messages to the database
