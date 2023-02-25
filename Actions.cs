@@ -9,6 +9,35 @@ namespace Paul.Utils
     public static class Actions
     {
 
+        public static void CryptoBloodbath()
+        {
+            Console.WriteLine("CryptoBloodbath() called, selling all crypto to dollars..");
+            
+            SellAllBTCMarket();
+            API.APICooldown(2000);
+
+            SellAllLTCMarket();
+            API.APICooldown(2000);
+            
+            SellAllETHMarket();
+            API.APICooldown(2000);
+            
+            SellAllDGEMarket();
+            API.APICooldown(2000);
+            
+            SellAllDASHMarket();
+            API.APICooldown(2000);
+            
+            SellAllXMRmarket();
+            API.APICooldown(2000);
+            
+            SellAllREPMarket();
+            API.APICooldown(2000);
+            
+            SellAllZECMarket();
+            API.APICooldown(2000);
+
+        }
         public static void SellAllBTCMarket()
         {
             double btcbal = KrakenDB.Get_BTC_Balance();
