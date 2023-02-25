@@ -1,45 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paul.Utils
 {
+    /// <summary>
+    /// This class does all the dangerous stuff. Buying selling, maybe margin trading/staking at some point.
+    /// </summary>
     public static class Actions
     {
+        #region actions
 
+        #region ALL CRYPTOS ACTIONS
         public static void CryptoBloodbath()
         {
             Console.WriteLine("CryptoBloodbath() called, selling all crypto to dollars..");
-            
+
             SellAllBTCMarket();
             API.APICooldown(2000);
 
             SellAllLTCMarket();
             API.APICooldown(2000);
-            
+
             SellAllETHMarket();
             API.APICooldown(2000);
-            
+
             SellAllDGEMarket();
             API.APICooldown(2000);
-            
+
             SellAllDASHMarket();
             API.APICooldown(2000);
-            
+
             SellAllXMRmarket();
             API.APICooldown(2000);
-            
+
             SellAllREPMarket();
             API.APICooldown(2000);
-            
+
             SellAllZECMarket();
             API.APICooldown(2000);
-
         }
 
+        #endregion
+
         #region BTC Actions
+
         public static void SellAllBTCMarket()
         {
             double btcbal = KrakenDB.Get_BTC_Balance();
@@ -60,28 +63,24 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllBTCMarket() called but btc balance is " + btcbal + "... Aborting.");
             }
         }
+
         public static void BuyMaxBTC()
         {
-            double btcbal = KrakenDB.Get_BTC_Balance();
             double usdbal = KrakenDB.Get_USD_Balance();
-            
-            // little fudge factor when submitting market orders
-            // leave a little money on the table but the probability of your
-            // trade being executed goes way up
-            usdbal *= .95; 
-            
-                Order o = new Order();
-                o.Leverage = KrakenLeverageLevel.None;
-                o.OrderType = KrakenOrderType.Market;
-                o.Pair = "XBTUSD";
-                o.Type = BuyOrSellType.Buy;
-                o.Volume = Convert.ToString(btcbal);
-                string x = o.SubmitOrder();
-                string y = "";
-            
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "XBTUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_BTC_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
         }
 
-        #endregion
+        #endregion BTC Actions
 
         #region LTC Actions
 
@@ -105,24 +104,26 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllLTCMarket() called but LTC balance is " + balance + "... Aborting.");
             }
         }
+
         public static void BuyMaxLTC()
         {
-            double btcbal = KrakenDB.Get_BTC_Balance();
             double usdbal = KrakenDB.Get_USD_Balance();
 
-
+            // fudge factor when submitting market orders
+            usdbal *= .95;
             Order o = new Order();
             o.Leverage = KrakenLeverageLevel.None;
             o.OrderType = KrakenOrderType.Market;
-            o.Pair = "XBTUSD";
+            o.Pair = "LTCUSD";
             o.Type = BuyOrSellType.Buy;
-            o.Volume = Convert.ToString(btcbal);
+            o.Price = Convert.ToString(KrakenDB.Get_LTC_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
             string x = o.SubmitOrder();
-            string y = "";
-
         }
 
-        #endregion
+        #endregion LTC Actions
+
+        #region ETH ACTIONS
 
         public static void SellAllETHMarket()
         {
@@ -144,6 +145,26 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllETHMarket() called but eth balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxETH()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "ETHUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_ETH_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+        #region DOGECOIN ACTIONS
+
         public static void SellAllDGEMarket()
         {
             double btcbal = KrakenDB.Get_DGE_Balance();
@@ -164,6 +185,26 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllDGEMarket() called but doge balance is " + btcbal + "... Aborting.");
             }
         }
+        public static void BuyMaxDGE()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "XDGUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_DGE_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+        #region DASH ACTIONS
+
         public static void SellAllDASHMarket()
         {
             double balance = KrakenDB.Get_DASH_Balance();
@@ -184,6 +225,26 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllDASHMarket() called but dash balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxDASH()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "DASHUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_DASH_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+        #region XMR ACXTIONS
+
         public static void SellAllXMRmarket()
         {
             double balance = KrakenDB.Get_XMR_Balance();
@@ -204,6 +265,26 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllXMRMarket() called but xmr balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxXMR()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "XMRUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_XMR_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+        #region ZEC ACTIONS
+
         public static void SellAllZECMarket()
         {
             double balance = KrakenDB.Get_ZEC_Balance();
@@ -224,6 +305,25 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllZECMarket() called but zec balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxZEC()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "ZECUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_ZEC_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+        #region REP ACTIONS
         public static void SellAllREPMarket()
         {
             double balance = KrakenDB.Get_REP_Balance();
@@ -244,6 +344,25 @@ namespace Paul.Utils
                 Console.WriteLine("SellAllREPMarket() called but rep balance is " + balance + "... Aborting.");
             }
         }
+        public static void BuyMaxREP()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+
+            // fudge factor when submitting market orders
+            usdbal *= .95;
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "REPUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_REP_Price());
+            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            string x = o.SubmitOrder();
+        }
+
+        #endregion
+
+#endregion
 
     }
 }
