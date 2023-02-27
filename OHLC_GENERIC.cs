@@ -51,9 +51,9 @@ namespace Paul.Utils
         // string < vwap >,
         // string < volume >,
         // int < count >]
-        public static Root GetClassFromJson(string myJsonResponse)
+        public static Root GetClassFromJson(string JSONGobbeldyGook)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(myJsonResponse);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Root>(JSONGobbeldyGook);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Paul.Utils
         /// <returns>(double) Number of records added to the table</returns>
         public static double SaveToOHLCTable(Root root)
         {
-            double idx = 0;
+            double records_saved = 0;
 
             ///save bitcoin
             if (root.result.XXBTZUSD != null)
@@ -88,7 +88,7 @@ namespace Paul.Utils
                         obj.Count = Convert.ToDouble(root.result.XXBTZUSD[i][7].ToString());
 
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                     }
                 }
             }
@@ -114,7 +114,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XLTCZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XLTCZUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -141,7 +141,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XETHZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XETHZUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -167,7 +167,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XDGUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XDGUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -192,7 +192,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XMRUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XMRUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -217,7 +217,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.DASHUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.DASHUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -242,7 +242,7 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XZECUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XZECUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
@@ -268,12 +268,12 @@ namespace Paul.Utils
                         obj.Volume = Convert.ToDouble(root.result.XREPZUSD[i][6].ToString());
                         obj.Count = Convert.ToDouble(root.result.XREPZUSD[i][7].ToString());
                         SaveOHLCRecord(obj);
-                        idx++;
+                        records_saved++;
                         //Console.WriteLine("Saved record with timestamp: " + obj.timestamp.ToString());
                     }
                 }
             }
-            return idx;
+            return records_saved;
         }
 
         private static void SaveOHLCRecord(OHLCObject o)

@@ -17,9 +17,17 @@ namespace Paul.Utils
     {
         #region Public Methods
 
-        public static void APICooldown(int msec)
+        /// <summary>
+        /// call this every time you hit the API 
+        ///  or your gonna have problems
+        ///  https://docs.kraken.com/rest/#section/Rate-Limits
+        ///  generally 2 sec is good
+        ///  todo: move this to the actual api call and use the app config to configure the timeout value
+        /// </summary>
+        /// <param name="millisec"></param>
+        public static void Cooldown(int millisec)
         {
-            System.Threading.Thread.Sleep(msec);
+            System.Threading.Thread.Sleep(millisec);
         }
 
         public static string GetOHLCJsonData(string pairname, int intervl)
@@ -39,7 +47,37 @@ namespace Paul.Utils
             return publicResponse;
         }
 
-        /// <summary> rewrite as synchronous </summary>
+        //https://api.kraken.com/0/public/Time
+
+        public static string GetServerTimeJsonData(string pairname)
+        {
+            string publicEndpoint = "Time";
+            string publicInputParameters = "";
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+            return publicResponse;
+        }
+
+        //https://api.kraken.com/0/public/SystemStatus
+
+        public static string GetSystemStatusJsonData(string pairname)
+        {
+            string publicEndpoint = "SystemStatus";
+            string publicInputParameters = "";
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+            return publicResponse;
+        }
+
+        //https://api.kraken.com/0/public/Trades?pair=XBTUSD
+
+        public static string GetTradesJsonData(string pairname)
+        {
+            string publicEndpoint = "Trades";
+            string publicInputParameters = "";
+            string publicResponse = API.QueryPublicEndpoint(publicEndpoint, publicInputParameters);
+            return publicResponse;
+        }
+
+        /// <summary> redid this one to do it synchronously since everything runs step by step anyway </summary>
         /// <param name="endpointName">AddOrder</param>
         /// <param name="inputParameters">pair=x&price=y</param>
         /// <param name="apiPublicKey">api key</param>
@@ -91,7 +129,9 @@ namespace Paul.Utils
             return jsonData;
         }
 
-        /// <summary> this will probably work idk till i test (not having internet sucks crusty goat balls)</summary> <param
+        /// <summary> 
+        /// update: works like a dream
+        /// </summary> <param
         /// name="endpointName">AddOrder</param> <param
         /// name="inputParameters">pair=x&price=y</param> <param name="apiPublicKey">Api Public
         /// Key</param> <param name="apiPrivateKey">Api Private Key</param>

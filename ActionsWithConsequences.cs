@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Paul.Utils
 {
@@ -12,17 +13,47 @@ namespace Paul.Utils
         public static void BuyMaxBTC()
         {
             double usdbal = KrakenDB.Get_USD_Balance();
+            Console.WriteLine("USD Balance: " + usdbal.ToString("C"),CultureInfo.CurrentCulture);
+            
+            // fudge factor when submitting market orders (Prewvents InsufficientFunds Exception)
+            usdbal = Math.Round(usdbal *= .98, 2);
 
-            // fudge factor when submitting market orders
-            usdbal *= .95;
+            Console.WriteLine("USD Balance (fudge): " + usdbal.ToString("C"), CultureInfo.CurrentCulture);
+
             Order o = new Order();
             o.Leverage = KrakenLeverageLevel.None;
             o.OrderType = KrakenOrderType.Market;
             o.Pair = "XBTUSD";
             o.Type = BuyOrSellType.Buy;
             o.Price = Convert.ToString(KrakenDB.Get_BTC_Price());
-            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
+            double vol = usdbal / Convert.ToDouble(o.Price);
+            o.Volume = Convert.ToString(vol);
+
             string x = o.SubmitOrder();
+            Console.WriteLine(x);   
+        }
+
+        public static void BuyMaxLTC()
+        {
+            double usdbal = KrakenDB.Get_USD_Balance();
+            Console.WriteLine("USD Balance: " + usdbal.ToString("C"), CultureInfo.CurrentCulture);
+
+            // fudge factor when submitting market orders (Prewvents InsufficientFunds Exception)
+            usdbal = Math.Round(usdbal *= .98, 2);
+
+            Console.WriteLine("USD Balance (fudge): " + usdbal.ToString("C"), CultureInfo.CurrentCulture);
+
+            Order o = new Order();
+            o.Leverage = KrakenLeverageLevel.None;
+            o.OrderType = KrakenOrderType.Market;
+            o.Pair = "LTCUSD";
+            o.Type = BuyOrSellType.Buy;
+            o.Price = Convert.ToString(KrakenDB.Get_LTC_Price());
+            double vol = usdbal / Convert.ToDouble(o.Price);
+            o.Volume = Convert.ToString(vol);
+
+            string x = o.SubmitOrder();
+            Console.WriteLine(x);
         }
 
         public static void BuyMaxDASH()
@@ -69,22 +100,6 @@ namespace Paul.Utils
             o.Pair = "ETHUSD";
             o.Type = BuyOrSellType.Buy;
             o.Price = Convert.ToString(KrakenDB.Get_ETH_Price());
-            o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
-            string x = o.SubmitOrder();
-        }
-
-        public static void BuyMaxLTC()
-        {
-            double usdbal = KrakenDB.Get_USD_Balance();
-
-            // fudge factor when submitting market orders
-            usdbal *= .95;
-            Order o = new Order();
-            o.Leverage = KrakenLeverageLevel.None;
-            o.OrderType = KrakenOrderType.Market;
-            o.Pair = "LTCUSD";
-            o.Type = BuyOrSellType.Buy;
-            o.Price = Convert.ToString(KrakenDB.Get_LTC_Price());
             o.Volume = Convert.ToString(usdbal * Convert.ToDouble(o.Price));
             string x = o.SubmitOrder();
         }
@@ -142,28 +157,28 @@ namespace Paul.Utils
             Console.WriteLine("CryptoBloodbath() called, selling all crypto to dollars..");
 
             SellAllBTCMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllLTCMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllETHMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllDGEMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllDASHMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllXMRmarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllREPMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
 
             SellAllZECMarket();
-            API.APICooldown(2000);
+            API.Cooldown(2000);
         }
 
         public static void SellAllBTCMarket()

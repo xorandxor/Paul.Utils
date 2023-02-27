@@ -31,39 +31,40 @@ namespace Paul.Utils
             Root acctbal = GetClassFromJson(privateResponse);
 
             BalanceObject bal = new BalanceObject();
-            if (acctbal.result.ZUSD != null)
+
+            if ((acctbal.result != null) && (acctbal.result.ZUSD != null))
             {
                 bal.USD = Convert.ToDouble(acctbal.result.ZUSD.ToString());
             }
-            if (acctbal.result.XXBT != null)
+            if ((acctbal.result != null) && (acctbal.result.XXBT != null))
             {
                 bal.BTC = Convert.ToDouble(acctbal.result.XXBT.ToString());
             }
-            if (acctbal.result.XLTC != null)
+            if ((acctbal.result != null) && (acctbal.result.XLTC != null)) ;
             {
                 bal.LTC = Convert.ToDouble(acctbal.result.XLTC.ToString());
             }
-            if (acctbal.result.XETH != null)
+            if ((acctbal.result != null) && (acctbal.result.XETH != null))
             {
                 bal.ETH = Convert.ToDouble(acctbal.result.XETH.ToString());
             }
-            if (acctbal.result.XXDG != null)
+            if ((acctbal.result != null) && (acctbal.result.XXDG != null))
             {
                 bal.DGE = Convert.ToDouble(acctbal.result.XXDG.ToString());
             }
-            if (acctbal.result.XXMR != null)
+            if ((acctbal.result != null) && (acctbal.result.XXMR != null))
             {
                 bal.XMR = Convert.ToDouble(acctbal.result.XXMR.ToString());
             }
-            if (acctbal.result.DASH != null)
+            if ((acctbal.result != null) && (acctbal.result.DASH != null))
             {
                 bal.DASH = Convert.ToDouble(acctbal.result.DASH.ToString());
             }
-            if (acctbal.result.XZEC != null)
+            if ((acctbal.result != null) && (acctbal.result.XZEC != null))
             {
                 bal.ZEC = Convert.ToDouble(acctbal.result.XZEC.ToString());
             }
-            if (acctbal.result.XREP != null)
+            if ((acctbal.result != null) && (acctbal.result.XREP != null))
             {
                 bal.REP = Convert.ToDouble(acctbal.result.XREP.ToString());
             }
